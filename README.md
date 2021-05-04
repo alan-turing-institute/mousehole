@@ -6,7 +6,7 @@ data.
 ## 🤔 What is Mousehole
 
 Mousehole
-([/ˈmaʊzəl/](https://ipa-reader.xyz/?text=%CB%88ma%CA%8Az%C9%99l&voice=Brian))
+([/ˈmaʊzəl/](http://ipa-reader.xyz/?text=%CB%88ma%CA%8Az%C9%99l&voice=Brian))
 takes its name from a harbour village in Cornwall, UK.  It is inspired by, and
 draws on, the [Data safe havens in the
 cloud](https://www.turing.ac.uk/research/research-projects/data-safe-havens-cloud)
@@ -91,27 +91,27 @@ And ideally
 
 Make sure you are authenticated with Azure CLI
 
-```
-$ az login
+```bash
+az login
 ```
 
 Change to the terraform directory
 
-```
-$ cd terraform
+```bash
+cd terraform
 ```
 
 Initialise terraform
 
-```
-$ terraform init
+```bash
+terraform init
 ```
 
 Make a copy of the example Terraform variables file
 [`terraform.tfvars.example`](terraform/terraform.tfvars.example).
 
-```
-$ cp terraform.tfvars.example terraform.tfvars
+```bash
+cp terraform.tfvars.example terraform.tfvars
 ```
 
 Edit your copy using your text editor, completing the appropriate variables.
@@ -121,15 +121,15 @@ Terraform.
 
 Plan your deployment
 
-```
-$ terraform plan -out myplan
+```bash
+terraform plan -out myplan
 ```
 
 Check the output to ensure the changes make sense. If all is well you can now
 apply the plan with
 
-```
-$ terraform apply myplan
+```bash
+terraform apply myplan
 ```
 
 Terraform will print a message giving the address of the name servers of the
@@ -142,8 +142,8 @@ DNS managed by terraform.
 
 Change to the Ansible directory
 
-```
-$ cd ../ansible
+```bash
+cd ../ansible
 ```
 
 Terraform will have written some files needed by Ansible,
@@ -157,14 +157,14 @@ Terraform will have written some files needed by Ansible,
 
 Ensure the required Ansible roles and collections are installed
 
-```
-$ ansible-galaxy install -r requirements.yaml
+```bash
+ansible-galaxy install -r requirements.yaml
 ```
 
 Make a copy of the example variables file
 
-```
-$ cp vars/ansible_vars.yaml.example vars/ansible_vars.yaml
+```bash
+cp vars/ansible_vars.yaml.example vars/ansible_vars.yaml
 ```
 
 Open your copy with your text editor and ensure the values are correct and
@@ -187,16 +187,16 @@ software](#-adding-software) for details.
 
 Configure the Guacamole and DSVM machines
 
-```
-$ ansible-playbook -i inventory.yaml main.yaml
+```bash
+ansible-playbook -i inventory.yaml main.yaml
 ```
 
 ### 👥 Manage users with Ansible
 
 Make a copy of the users variables file
 
-```
-$ cp vars/user_vars.yaml.example vars/user_vars.yaml
+```bash
+cp vars/user_vars.yaml.example vars/user_vars.yaml
 ```
 
 Open your copy with your editor.  If you want the user management role to
@@ -215,8 +215,8 @@ To declare users that should not exist, add their username to the
 
 To create or remove users run
 
-```
-$ ansible-playbook -i inventory.yaml manage_users.yaml
+```bash
+ansible-playbook -i inventory.yaml manage_users.yaml
 ```
 
 If you have configured SMTP settings, newly created users will be send their
@@ -285,8 +285,8 @@ classic and standard snaps in the list `snap_packages_default`.
 
 After making changes you can ensure the packages are installed with
 
-```
-$ ansible-playbook -i inventory.yaml main.yaml --tags dsvm
+```bash
+ansible-playbook -i inventory.yaml main.yaml --tags dsvm
 ```
 
 ### 💣 Tear down the environment
@@ -294,8 +294,8 @@ $ ansible-playbook -i inventory.yaml main.yaml --tags dsvm
 To tear down all of the resources you have deployed, ensure you are in the
 terraform directory and run
 
-```
-$ terraform destroy
+```bash
+terraform destroy
 ```
 
 ## 📖 User guide
@@ -402,9 +402,9 @@ If you want to give files created outside of `/shared` equivalent permissions
 (for example something you created in your home directory then copied to
 `/shared`) to files created in `/shared` you can run
 
-```
-$ chgrp shared myfile
-$ chmod u=rw,g=rw,o= myfile
+```bash
+chgrp shared myfile
+chmod u=rw,g=rw,o= myfile
 ```
 
 #### Output data
@@ -505,16 +505,16 @@ of maintaining compatible versions globally.
 
 Here is an example. Create a directory for this piece of work
 
-```
-$ mkdir /shared/new_project
-$ cd /shared/new_project
+```bash
+mkdir /shared/new_project
+cd /shared/new_project
 ```
 
 Create, and enter, a new virtual environment
 
-```
-$ python3 -m venv ./venv
-$ source ./venv/bin/activate
+```bash
+python3 -m venv ./venv
+source ./venv/bin/activate
 ```
 
 Your prompt will now (probably) have a prefix like `(venv)` indicating that you
@@ -523,10 +523,10 @@ are using the virtual environment. You will notice that
 [pip](https://pip.pypa.io/en/stable/user_guide/) and added it to your path, so
 you can now use pip to install and manage Python packages. For example
 
-```
-$ pip install numpy
-$ pip list
-$ pip uninstall numpy
+```bash
+pip install numpy
+pip list
+pip uninstall numpy
 ```
 
 Other members of your team can use the new virtual environment in the same way
@@ -546,14 +546,14 @@ reproducible.
 You can create a requirements file based on your currently install packages
 with
 
-```
-$ pip freeze > requirements.txt
+```bash
+pip freeze > requirements.txt
 ```
 
 You may then install the defined packages (with identical versions) with
 
-```
-$ pip install -r requirements.txt
+```bash
+pip install -r requirements.txt
 ```
 
 #### Julia
@@ -565,7 +565,7 @@ environment will be shared between all users.
 
 Additional environments can be created as required, for example
 
-```
+```julia
 julia> mkdir("/shared/my_project")
 julia> cd("/shared/my_project")
 julia> ]
@@ -576,7 +576,7 @@ julia> ]
 See the [Pkg.jl documentation](https://pkgdocs.julialang.org/) for more
 information on managing packages and environments.
 
-#### Containers
+#### Singularity and containers
 
 You will find [Singularity](https://sylabs.io/guides/latest/user-guide)
 installed on the DSVM. Singularity is a container platform with a focus on HPC.
@@ -589,9 +589,9 @@ Singularity can pull containers from [the Singularity
 library](https://cloud.sylabs.io/library) as well as [Docker
 Hub](https://hub.docker.com/). For example
 
-```
-$ singularity pull library://dxtr/default/hpc-tensorflow:0.1
-$ singularity pull docker://alpine
+```bash
+singularity pull library://dxtr/default/hpc-tensorflow:0.1
+singularity pull docker://alpine
 ```
 
 The Singularity [Quick Start](https://sylabs.io/guides/latest/user-guide/)
