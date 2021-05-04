@@ -1,6 +1,7 @@
 # Mousehole 🐭
 
-A light-weight, stand-alone environment for working with private data.
+Quickly deploy a flexible, collaborative environment for working with private
+data.
 
 ## 🤔 What is Mousehole
 
