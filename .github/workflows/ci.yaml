@@ -8,13 +8,21 @@ jobs:
     name: "Lint Ansible"
     runs-on: ubuntu-latest
 
+    defaults:
+      run:
+        working-directory: ./ansible
+
     steps:
       - uses: actions/checkout@v2
 
-      - name: Lint Ansible Playbook
-        uses: ansible/ansible-lint-action@v4.1.0
-        with:
-          targets: "ansible/playbook.yaml"
+      - name: Setup Python
+        uses: actions/setup-python@v2
+
+      - name: Install ansible-lint
+        run: pip install "ansible-lint[community]"
+
+      - name: Lint Ansible
+        run: ansible-lint
 
   yaml_lint:
     name: "Lint YAML"
