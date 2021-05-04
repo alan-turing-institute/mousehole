@@ -1,3 +1,4 @@
+# Ansible vault password file
 vault_password.txt
 
 # Production terraform variables
@@ -16,3 +17,9 @@ ansible/vars/user_vars.yaml
 
 # Initial user credentials files
 *new_users.yaml*
+
+# Terraform state and lock files
+*.tfstate
+*.tfstate.backup
+.terraform
+.terraform.lock.hcl
