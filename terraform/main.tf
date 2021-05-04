@@ -288,6 +288,7 @@ resource "azurerm_storage_account" "this" {
   name                = substr(lower("${local.resource_tag.storage_account}${random_string.storage_suffix.result}"), 0, 24)
   resource_group_name = azurerm_resource_group.this.name
   location            = var.location
+  min_tls_version     = "TLS1_2"
 
   # Only FileStorage accounts support SMB/NFS shares on Premium (SSD) storage
   account_kind             = "FileStorage"
