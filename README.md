@@ -582,7 +582,7 @@ You will find [Singularity](https://sylabs.io/guides/latest/user-guide)
 installed on the DSVM. Singularity is a container platform with a focus on HPC.
 It has a number of advantages over docker when we want to run containers as
 applications rather than services including, no setup for non-trusted users,
-[MPI support](https://sylabs.io/guides/latest/user-guide/mpi.html), host system
+[MPI support](https://sylabs.io/guides/3.7/user-guide/mpi.html), host system
 [GPU access](https://sylabs.io/guides/3.7/user-guide/gpu.html).
 
 Singularity can pull containers from [the Singularity
