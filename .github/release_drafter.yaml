@@ -1,0 +1,33 @@
+---
+
+name-template: 'v$RESOLVED_VERSION'
+tag-template: 'v$RESOLVED_VERSION'
+
+template: |
+  ## Changes
+
+  $CHANGES
+
+  ## Contributors
+
+  $CONTRIBUTORS
+
+categories:
+  - title: '🚀 Features'
+    label: 'enhancement'
+  - title: '🐛 Bug Fixes'
+    label: 'bug'
+  - title: '📚 Documentation'
+    label: 'documentation'
+
+version-resolver:
+  major:
+    labels: []
+  minor:
+    labels:
+      - 'enhancement'
+  patch:
+    labels:
+      - 'documentation'
+      - 'bug'
+  default: patch

@@ -1,0 +1,113 @@
+---
+name: CI
+
+on: [push, pull_request]
+
+jobs:
+  ansible_lint:
+    name: "Lint Ansible"
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Lint Ansible Playbook
+        uses: ansible/ansible-lint-action@master
+        with:
+          targets: "ansible/playbook.yaml"
+
+  yaml_lint:
+    name: "Lint YAML"
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: YAML Lint
+        uses: ibiqlik/action-yamllint@v3
+        with:
+          file_or_dir: .
+          config_file: .yamllint.yaml
+
+  markdown_lint:
+    name: "Lint Markdown"
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup Ruby
+        uses: actions/setup-ruby@v1
+
+      - name: Install mdl
+        run: gem install mdl
+
+      - name: Lint markdown
+        run: mdl --style .mdl_style.rb ./
+
+  markdown_link_check:
+    name: "Check Markdown links"
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Check links
+        uses: gaurav-nelson/github-action-markdown-link-check@1
+        with:
+          use-verbose-mode: "yes"
+
+  python_lint:
+    name: "Lint Python"
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup Python
+        uses: actions/setup-python@v2
+
+      - name: Install flake8
+        run: pip install flake8
+
+      - name: Lint
+        run: flake8 --count --show-source --statistics
+
+  terraform:
+    name: "Terraform"
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./terraform
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v1
+
+      - name: Terraform Init
+        run: terraform init
+
+      - name: Terraform Format
+        run: terraform fmt -check -diff
+
+  tfsec:
+    name: "Check Terraform Security"
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Check security
+        uses: triat/terraform-security-scan@v2
+        with:
+          tfsec_actions_comment: false
+          tfsec_actions_working_dir: ./terraform
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
