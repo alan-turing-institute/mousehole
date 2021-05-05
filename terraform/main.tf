@@ -257,8 +257,6 @@ resource "azurerm_managed_disk" "this" {
   storage_account_type = var.storage_type
   create_option        = "Empty"
   disk_size_gb         = var.shared_disk_size_gb
-
-  count = var.shared_disk_size_gb > 0 ? 1 : 0
 }
 
 # Attach shared data disk to DSVM
@@ -267,8 +265,6 @@ resource "azurerm_virtual_machine_data_disk_attachment" "this" {
   virtual_machine_id = azurerm_linux_virtual_machine.dsvm.id
   lun                = "0"
   caching            = "ReadWrite"
-
-  count = var.shared_disk_size_gb > 0 ? 1 : 0
 }
 
 resource "random_string" "storage_suffix" {
@@ -351,7 +347,6 @@ resource "local_file" "terraform_vars" {
     guacamole_private_ip: ${azurerm_network_interface.guacamole.private_ip_address}
     dsvm_admin_user: ${var.admin_username.dsvm}
     dsvm_private_ip: ${azurerm_network_interface.dsvm.private_ip_address}
-    shared_data_disk: ${var.shared_disk_size_gb > 0 ? true : false}
     ingress_unc: ${replace(azurerm_storage_share.this["ingress"].url, "https://", "//")}
     egress_unc: ${replace(azurerm_storage_share.this["egress"].url, "https://", "//")}
     share_username: ${azurerm_storage_account.this.name}
