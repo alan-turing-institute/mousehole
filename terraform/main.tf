@@ -132,7 +132,6 @@ resource "azurerm_linux_virtual_machine" "guacamole" {
     name                 = "${local.resource_tag.os_disk}_guacamole"
     caching              = "ReadWrite"
     storage_account_type = var.storage_type
-    disk_size_gb         = 30
   }
 
   source_image_reference {
@@ -239,7 +238,6 @@ resource "azurerm_linux_virtual_machine" "dsvm" {
     name                 = "${local.resource_tag.os_disk}_dsvm"
     caching              = "ReadWrite"
     storage_account_type = var.storage_type
-    disk_size_gb         = 30
   }
 
   source_image_reference {
