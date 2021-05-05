@@ -367,6 +367,14 @@ using your new VM password.
 
 ### 🗄️ Data
 
+The size of your environment's OS disk (which holds the `/home` directory) will
+depend on the size of the virtual machine deployed. It should have sufficient
+capacity to your configuration and cache files as well as the system-wide
+packages, configuration and logs. However, this space is limited and difficult
+to scale so it is best to avoid using your home directory for working with large
+amounts of data. Instead, you will find the directories described below more
+suitable.
+
 Your environment contains three directories intended to help the workflow of
 ingress, analysis and egress. There directories are located at
 
