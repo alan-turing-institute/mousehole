@@ -43,8 +43,8 @@ variable "storage_type" {
 variable "shared_disk_size_gb" {
   type = number
   validation {
-    condition     = var.shared_disk_size_gb >= 0
-    error_message = "The shared disk size must be a positive integer or 0."
+    condition     = var.shared_disk_size_gb > 0
+    error_message = "The shared disk size must be a positive integer."
   }
 }
 

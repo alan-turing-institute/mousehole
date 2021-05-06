@@ -303,7 +303,6 @@
             default: yes
             permissions: rwx
             state: present
-      when: shared_data_disk
 
     - name: Configure ingress and egress shares
       block:
@@ -466,7 +465,6 @@
         block: |
           export JULIA_DEPOT_PATH="/shared/.julia:$JULIA_DEPOT_PATH"
           export PIP_CACHE_DIR=/shared/.pip_cache
-      when: shared_data_disk
 
     - name: Create desktop directory in /etc/skel
       become: yes
