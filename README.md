@@ -14,7 +14,7 @@ project. That project has developed policy and processes to deploy research
 environments on the cloud that are secure enough to handle sensitive data yet
 flexible enough to host productive data-science projects.
 
-The Data safe havens project has devised  a series of data security tiers
+The Data Safe Havens project has devised  a series of data security tiers
 numbered 0–4. Tiers 2 and above cover sensitive data, and tier 0 covers public,
 non-sensitive data. That leaves tier 1 data which is not sensitive, but we may
 still wish to keep private. For example, we might not be ready to share the data
@@ -27,10 +27,12 @@ with tier 1 or 0 data. The aim of Mousehole is therefore to take the positive
 features of the safe haven and include them in a light-weight, stand-alone and
 more permissive environment suitable for non-sensitive data.
 
+## 🔓 Data that is private but not sensitive or personal
+
 > ⚠️ Important
 >
-> This environment is not suitable for work involving sensitive or personal
-> data. It is completely possible for someone to extract the private data from
+> **This environment is not suitable for work involving sensitive or personal
+> data**. It is completely possible for someone to extract the private data from
 > the environment, whether intentionally, accidentally or through coercion. In
 > particular, users can copy/paste to and from the remote machine and make
 > outbound internet connections.
