@@ -41,8 +41,7 @@ Initialise terraform
 terraform init
 ```
 
-Make a copy of the example Terraform variables file
-[`terraform.tfvars.example`](terraform/terraform.tfvars.example).
+Make a copy of the example Terraform variables file `terraform.tfvars.example`.
 
 ```bash
 cp terraform.tfvars.example terraform.tfvars
@@ -164,13 +163,12 @@ To change the size of either of the virtual machines, for example to handle an
 increased number of users or support GPU computing, you can simply update the
 Terraform configuration.
 
-Open [`terraform/terraform.tfvars`](terraform/terraform.tfvars.example) and edit
-the dict `vm_sizes`. `guacamole` defines the size of the Guacamole VM and `dsvm`
-defines the size of the DSVM. See the [Azure
+Open `terraform/terraform.tfvars` and edit the dict `vm_sizes`. `guacamole`
+defines the size of the Guacamole VM and `dsvm` defines the size of the DSVM.
+See the [Azure
 documentation](https://docs.microsoft.com/en-us/azure/virtual-machines/sizes)
 for a list of possible values. Ensure that your selected VM size is available in
-your selected location (`location` in
-[`terraform/terraform.tfvars`](terraform/terraform.tfvars.example)). You can
+your selected location (`location` in `terraform/terraform.tfvars`. You can
 check the available VM sizes for a location by running `az vm list-sizes
 --location "<location>"`.
 
@@ -195,27 +193,25 @@ convenient and secure for both data ingress and egress.
 
 ## 🎁 Adding software
 
-The Ansible variables file [`host_vars/dsvm.yaml`](ansible/host_vars/dsvm.yaml)
-has a number of DSVM packages predefined. You can also install additional apt
-packages (from the default repositories) or [snaps](https://snapcraft.io/) by
-editing your [`ansible_vars.yaml`](ansible/vars/ansible_vars.yaml.example) file.
+The Ansible variables file `host_vars/dsvm.yaml` has a number of DSVM packages
+predefined. You can also install additional apt packages (from the default
+repositories) or [snaps](https://snapcraft.io/) by editing your
+`ansible_vars.yaml` file.
 
 To install additional packages using `apt` (Ubuntu's package manager), add the
-names of the packages to the list `apt_packages_extra` in
-[`ansible_vars.yaml`](ansible/vars/ansible_vars.yaml.example). You can find the
-names of packages for the default Ubuntu 20.04 LTS image on the [the Ubuntu
-packages website](https://packages.ubuntu.com/focal/).
+names of the packages to the list `apt_packages_extra` in `ansible_vars.yaml`.
+You can find the names of packages for the default Ubuntu 20.04 LTS image on the
+[the Ubuntu packages website](https://packages.ubuntu.com/focal/).
 
 To add new snap packages add them to the list `snap_packages_extra` in
-[`ansible_vars.yaml`](ansible/vars/ansible_vars.yaml.example). Each item on this
-list must have the key `name` which is the name of the snap as you would use to
-install on the command line. You can find the names of snaps on the [snap
-store](https://snapcraft.io/store) by selecting a snap and clicking the green
-install button. If the snap should be installed with classic confinement (this
-is also made apparent when clicking 'install' in the snap store) you should also
-add the key `classic` with value `yes`. Look at
-[`host_vars/dsvm.yaml`](ansible/host_vars/dsvm.yaml) for examples of both
-classic and standard snaps in the list `snap_packages_default`.
+`ansible_vars.yaml`. Each item on this list must have the key `name` which is
+the name of the snap as you would use to install on the command line. You can
+find the names of snaps on the [snap store](https://snapcraft.io/store) by
+selecting a snap and clicking the green install button. If the snap should be
+installed with classic confinement (this is also made apparent when clicking
+'install' in the snap store) you should also add the key `classic` with value
+`yes`. Look at `host_vars/dsvm.yaml` for examples of both classic and standard
+snaps in the list `snap_packages_default`.
 
 After making changes you can ensure the packages are installed with
 
