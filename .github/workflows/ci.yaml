@@ -119,3 +119,20 @@ jobs:
           tfsec_actions_working_dir: ./terraform
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  docs:
+    name: "Test Documentation Build"
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup Python
+        uses: actions/setup-python@v2
+
+      - name: Install MkDocs
+        run: pip install mkdocs
+
+      - name: Build
+        run: mkdocs build --strict
