@@ -23,3 +23,6 @@ ansible/vars/user_vars.yaml
 *.tfstate.backup
 .terraform
 .terraform.lock.hcl
+
+# MkDocs
+site
