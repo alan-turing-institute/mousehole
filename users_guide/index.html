@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        <link rel="canonical" href="https://example.com/users_guide/">
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>📖 User guide - Mousehole 🐭</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css">
+
+        <script src="../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="..">Mousehole 🐭</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href=".." class="nav-link">Mousehole 🐭</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../admin_guide/" class="nav-link">💼 Administrator guide</a>
+                            </li>
+                            <li class="navitem active">
+                                <a href="./" class="nav-link">📖 User guide</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="prev" href="../admin_guide/" class="nav-link">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a rel="next" class="nav-link disabled">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-level="1"><a href="#user-guide" class="nav-link">📖 User guide</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#using-guacamole" class="nav-link">🥑 Using Guacamole</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#first-login" class="nav-link">🌱 First login</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#data" class="nav-link">🗄️ Data</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#bundled-software" class="nav-link">🛍️ Bundled software</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#recommended-workflows" class="nav-link">👔 Recommended workflows</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="user-guide">📖 User guide</h1>
+<h2 id="using-guacamole">🥑 Using Guacamole</h2>
+<p>See the <a href="https://guacamole.apache.org/doc/gug/using-guacamole.html">Guacamole user
+guide</a>. Note that
+file transfer is disabled by default.</p>
+<h2 id="first-login">🌱 First login</h2>
+<p>Before your first login, you will receive two sets of credentials. The 'Web
+Portal' credentials are for connecting to the Guacamole portal. After you have
+logged in to Guacamole you will be able to select a SSH (text based) or RDP
+(graphical desktop) interface to the virtual machine.</p>
+<p>You will use the 'VM credentials' to authenticate with the virtual machine
+whether using the SSH or RDP connection.</p>
+<p>When you have both sets of credentials, open your browser and navigate to the
+Guacamole portal and enter your username and password.</p>
+<p><img alt="" src="../images/guacamole_login.png" /></p>
+<p>You will be asked to create a new password. Enter your new, secure password into
+the text boxes and click 'continue'.</p>
+<p><img alt="" src="../images/guacamole_reset_password.png" /></p>
+<p>When you click 'continue' you will be taken to the multi-factor authentication
+setup. <strong>However</strong>, at this point you must refresh the page and login again with
+your <strong>new</strong> password.</p>
+<p>After you login with your new password, you will again be directed to setup
+multi-factor authentication. Scan the QR code using an authenticator app such as
+<a href="https://github.com/andOTP/andOTP">andOTP</a>. Produce a one time password, enter
+it into the text box and click 'continue'.</p>
+<p><img alt="" src="../images/guacamole_totp_setup.png" /></p>
+<p>You will now be taken to the Guacamole home page and presented with the
+available connections, 'DSVM RDP' and 'DSVM SSH'. For your first login, you
+<strong>must</strong> use the SSH connection to be able to reset your VM password. Click on
+the 'DSVM SSH' connection.</p>
+<p>Enter your VM username and press enter.</p>
+<p><img alt="" src="../images/guacamole_ssh_username.png" /></p>
+<p>Next, enter your VM password and press enter.</p>
+<p><img alt="" src="../images/guacamole_ssh_password.png" /></p>
+<p>You will be prompted to change your VM password. Enter the current password, and
+press enter. Then enter your new, secure password and press enter. Repeat your
+new password to confirm it is correct.</p>
+<p><img alt="" src="../images/guacamole_ssh_reset_password.png" /></p>
+<p>If you successfully update your password, the message <code>passwd: password updated
+successfully</code> will be printed and you will be disconnected. Click on 'Home' to
+go back to the Guacamole home page.</p>
+<p><img alt="" src="../images/guacamole_ssh_disconnected.png" /></p>
+<p>You will now be able to connect to the VM in either an SSH or RDP connection
+using your new VM password.</p>
+<h2 id="data">🗄️ Data</h2>
+<p>The size of your environment's OS disk (which holds the <code>/home</code> directory) will
+depend on the size of the virtual machine deployed. It should have sufficient
+capacity to your configuration and cache files as well as the system-wide
+packages, configuration and logs. However, this space is limited and difficult
+to scale so it is best to avoid using your home directory for working with large
+amounts of data. Instead, you will find the directories described below more
+suitable.</p>
+<p>Your environment contains three directories intended to help the workflow of
+ingress, analysis and egress. There directories are located at</p>
+<ul>
+<li><code>/data</code></li>
+<li><code>/shared</code></li>
+<li><code>/output</code></li>
+</ul>
+<p>although you will also find symbolic links to these directories in your home
+directory (<code>~/</code>) and on your desktop.</p>
+<p>Below a description and explanation of each directory is given.</p>
+<h3 id="input-data">Input data</h3>
+<p>The input data for your project will be brought into the environment by an
+administrator. You will be able to find it in the <code>/data</code> directory. This
+directory is visible to all users and is read-only.</p>
+<p>If you need to modify the data, for example to clean the data, create derivative
+data sets or combine data sets you should first copy the data to your home
+directory or the <a href="#shared-working-space">shared working directory</a>.</p>
+<h3 id="shared-working-space">Shared working space</h3>
+<p>The directory <code>/shared</code> can be used when multiple users will need to edit files
+or directories. This is the best place to keep large data files you may edit and
+you working file. New files and directories created here will belong to the
+<code>shared</code> group, which all users are members of, and members of the <code>shared</code>
+group will be given read and write privileges. This means that <em>any user</em> will
+be able to read, edit and delete files and directories created here.</p>
+<p>If you want to give files created outside of <code>/shared</code> equivalent permissions
+(for example something you created in your home directory then copied to
+<code>/shared</code>) to files created in <code>/shared</code> you can run</p>
+<pre><code class="language-bash">chgrp shared myfile
+chmod u=rw,g=rw,o= myfile
+</code></pre>
+<h3 id="output-data">Output data</h3>
+<p>The output directory, <code>/output</code>, provides a convenient place to put the products
+of your work. This directory is writeable by all users. At the end of a project,
+data stored here can be reviewed, and extracted from the environment by an
+administrator.</p>
+<h2 id="bundled-software">🛍️ Bundled software</h2>
+<p>The environment comes pre-loaded with a selection of software which aims to
+cover the most common tasks and popular programming languages.</p>
+<p>Here these packages are listed along with their version and how to launch them.</p>
+<h3 id="supported-programming-languages">Supported programming languages</h3>
+<table>
+<thead>
+<tr>
+<th>language</th>
+<th>version</th>
+<th>docs</th>
+<th>command or route to application</th>
+<th>notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://www.python.org/">Python</a></td>
+<td>3.8, 3.9</td>
+<td>(<a href="https://docs.python.org/3.8/">3.8</a>, <a href="https://docs.python.org/3.9/">3.9</a>)</td>
+<td><code>python3</code>, <code>python3.9</code></td>
+<td>see the <a href="#Python">Python recommended workflow section</a> for recommendations on how to use virtual environments to install and manage Python packages</td>
+</tr>
+<tr>
+<td><a href="https://julialang.org/">Julia</a></td>
+<td>1.4</td>
+<td><a href="https://docs.julialang.org/en/v1.4/">docs</a></td>
+<td><code>julia</code></td>
+<td>see the <a href="#Julia">Julia recommended workflow section</a> for information on how the default julia depot has been configured</td>
+</tr>
+<tr>
+<td><a href="https://www.rust-lang.org/">Rust</a></td>
+<td>1.47 (cargo 1.46)</td>
+<td><a href="https://doc.rust-lang.org/book/">docs</a></td>
+<td><code>rustc</code>, <code>cargo</code></td>
+<td></td>
+</tr>
+<tr>
+<td><a href="https://golang.org/">Go</a></td>
+<td>1.13</td>
+<td><a href="https://golang.org/doc/">docs</a></td>
+<td><code>go</code></td>
+<td></td>
+</tr>
+<tr>
+<td><a href="https://www.r-project.org/">R</a></td>
+<td>3.6</td>
+<td></td>
+<td><code>R</code></td>
+<td></td>
+</tr>
+<tr>
+<td><a href="https://www.gnu.org/software/octave/index">Octave</a></td>
+<td>5.2</td>
+<td><a href="https://octave.org/doc/v5.2.0/">docs</a></td>
+<td><code>octave</code> or Applications → Education → GNU Octave</td>
+<td></td>
+</tr>
+<tr>
+<td>C <a href="https://gcc.gnu.org/">gcc</a></td>
+<td>9.3</td>
+<td><a href="https://gcc.gnu.org/onlinedocs/gcc-9.3.0/gcc/">docs</a></td>
+<td><code>gcc</code></td>
+<td></td>
+</tr>
+<tr>
+<td>Fortran <a href="https://gcc.gnu.org/">gfortran</a></td>
+<td>9.3</td>
+<td><a href="https://gcc.gnu.org/onlinedocs/gcc-9.3.0/gfortran/">docs</a></td>
+<td><code>gfortran</code></td>
+<td></td>
+</tr>
+<tr>
+<td>C++ <a href="https://gcc.gnu.org/">gpp</a></td>
+<td>9.3</td>
+<td><a href="https://gcc.gnu.org/onlinedocs/gcc-9.3.0/libstdc++/manual/">docs</a></td>
+<td><code>gcc</code> or <code>g++</code></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="development-tools">Development tools</h3>
+<table>
+<thead>
+<tr>
+<th>application</th>
+<th>version</th>
+<th>docs</th>
+<th>command or route to application</th>
+<th>notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://git-scm.com/">git</a></td>
+<td>2.25</td>
+<td><a href="https://git-scm.com/docs">docs</a></td>
+<td><code>git</code></td>
+<td></td>
+</tr>
+<tr>
+<td><a href="https://www.gitkraken.com/">gitkraken</a></td>
+<td>7.5</td>
+<td><a href="https://support.gitkraken.com/">docs</a></td>
+<td>Applications → Development → GitKraken</td>
+<td></td>
+</tr>
+<tr>
+<td><a href="https://dbeaver.io/">dbeaver</a></td>
+<td>21.0</td>
+<td><a href="https://github.com/dbeaver/dbeaver/wiki">docs</a></td>
+<td>Applications → Development → DBeaver Community</td>
+<td></td>
+</tr>
+<tr>
+<td><a href="https://www.gnu.org/software/make/">make</a></td>
+<td>4.2</td>
+<td><a href="https://www.gnu.org/software/make/manual/make.html">docs</a></td>
+<td><code>make</code></td>
+<td></td>
+</tr>
+<tr>
+<td><a href="https://cmake.org/">cmake</a></td>
+<td>3.16</td>
+<td><a href="https://cmake.org/cmake/help/v3.16/">docs</a></td>
+<td><code>cmake</code></td>
+<td></td>
+</tr>
+<tr>
+<td><a href="https://ninja-build.org/">ninja</a></td>
+<td>1.10</td>
+<td><a href="https://ninja-build.org/manual.html">docs</a></td>
+<td><code>ninja</code></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="shells-and-related">Shells and related</h3>
+<table>
+<thead>
+<tr>
+<th>application</th>
+<th>version</th>
+<th>docs</th>
+<th>command or route to application</th>
+<th>notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://www.gnu.org/software/bash/">bash</a></td>
+<td>5.0</td>
+<td><a href="https://www.gnu.org/software/bash/manual/bash.html">docs</a></td>
+<td><code>bash</code></td>
+<td>the default shell for all users</td>
+</tr>
+<tr>
+<td><a href="https://www.zsh.org/">zsh</a></td>
+<td>5.8</td>
+<td><a href="http://zsh.sourceforge.net/Doc/Release/zsh_toc.html">docs</a></td>
+<td><code>zsh</code></td>
+<td></td>
+</tr>
+<tr>
+<td><a href="https://fishshell.com/">fish</a></td>
+<td>3.1</td>
+<td><a href="https://fishshell.com/docs/3.1/index.html">docs</a></td>
+<td><code>fish</code></td>
+<td></td>
+</tr>
+<tr>
+<td><a href="https://github.com/tmux/tmux/wiki">tmux</a></td>
+<td>3.0</td>
+<td><a href="https://github.com/tmux/tmux/wiki/Getting-Started">docs</a></td>
+<td><code>tmux</code></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="editors">Editors</h3>
+<table>
+<thead>
+<tr>
+<th>application</th>
+<th>version</th>
+<th>docs</th>
+<th>command or route to application</th>
+<th>notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://www.vim.org/">vim</a></td>
+<td>8.1</td>
+<td><a href="https://www.vim.org/docs.php">docs</a> with fugitive, syntastic, airline, latexsuite and vim</td>
+<td>julia - <code>vim</code> or Applications → Accessories → GVim</td>
+<td></td>
+</tr>
+<tr>
+<td><a href="https://neovim.io/">neovim</a></td>
+<td>0.4</td>
+<td><a href="https://neovim.io/doc/user/">docs</a></td>
+<td><code>nvim</code></td>
+<td></td>
+</tr>
+<tr>
+<td><a href="https://www.gnu.org/software/emacs/">emacs</a></td>
+<td>26.3</td>
+<td><a href="https://www.gnu.org/software/emacs/manual/html_node/emacs/index.html">docs</a></td>
+<td><code>emacs</code> or Applications → Development → Emacs (GUI)</td>
+<td></td>
+</tr>
+<tr>
+<td><a href="https://atom.io/">atom</a></td>
+<td>1.56</td>
+<td><a href="https://flight-manual.atom.io/">docs</a></td>
+<td>Applications → Development → Atom</td>
+<td></td>
+</tr>
+<tr>
+<td><a href="https://www.sublimetext.com/">sublime</a></td>
+<td>3.2</td>
+<td><a href="https://www.sublimetext.com/docs/3/">docs</a></td>
+<td>Applications → Development → Sublime Text</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="ides">IDEs</h3>
+<table>
+<thead>
+<tr>
+<th>application</th>
+<th>version</th>
+<th>docs</th>
+<th>command or route to application</th>
+<th>notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://vscodium.com/">vscodium</a></td>
+<td>1.55</td>
+<td></td>
+<td>Applications → Development → VSCodium</td>
+<td>community binary distribution of VSCode</td>
+</tr>
+<tr>
+<td><a href="https://www.jetbrains.com/pycharm/">pycharm</a></td>
+<td>2021.1</td>
+<td><a href="https://www.jetbrains.com/pycharm/learn/">docs</a></td>
+<td>Applications → Development → PyCharm Community Edition</td>
+<td></td>
+</tr>
+<tr>
+<td><a href="https://www.rstudio.com/">rstudio</a></td>
+<td>1.4</td>
+<td><a href="https://docs.rstudio.com/">docs</a></td>
+<td>Applications → Development → RStudio</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="containers">Containers</h3>
+<table>
+<thead>
+<tr>
+<th>application</th>
+<th>version</th>
+<th>docs</th>
+<th>command or route to application</th>
+<th>notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://sylabs.io/singularity/">singularity</a></td>
+<td>3.7</td>
+<td><a href="https://sylabs.io/guides/3.7/user-guide/">docs</a></td>
+<td><code>singularity</code></td>
+<td>see the <a href="#Containers-1">Containers section of recommended workflows</a> for information on using singularity to run containers</td>
+</tr>
+</tbody>
+</table>
+<h3 id="latex">LaTeX</h3>
+<table>
+<thead>
+<tr>
+<th>application</th>
+<th>version</th>
+<th>docs</th>
+<th>command or route to application</th>
+<th>notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://tug.org/texlive/">texlive</a></td>
+<td>2019</td>
+<td><a href="https://tug.org/texlive/doc.html">docs</a></td>
+<td><code>latexmk</code>, <code>latex</code>, <code>pdflatex</code>, <code>xetex</code>, <code>luatex</code>, ...</td>
+<td>full distribution</td>
+</tr>
+<tr>
+<td><a href="https://www.texstudio.org/">texstudio</a></td>
+<td>2.12</td>
+<td></td>
+<td>Applications → Office → TeXstudio</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="office">Office</h3>
+<table>
+<thead>
+<tr>
+<th>application</th>
+<th>version</th>
+<th>docs</th>
+<th>command or route to application</th>
+<th>notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://www.libreoffice.org/">libreoffice</a></td>
+<td>6.4</td>
+<td><a href="https://documentation.libreoffice.org/en/english-documentation/">docs</a></td>
+<td>Applications → Office → (LibreOffice, LibreOffice Base, LibreOffice Calc, LibreOffice Draw, LibreOffice Impress, LibreOffice Math, LibreOffice Writer)</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="recommended-workflows">👔 Recommended workflows</h2>
+<h3 id="python">Python</h3>
+<p>You will notice that very few Python packages, including pip, are installed
+system wide. The intension is for you to manage as many or as few virtual
+environments as required for all your strands of work. A strong advantage of
+this approach is the multiple virtual environments may be created with the
+packages they need, pinned to particular versions if required, without the worry
+of maintaining compatible versions globally.</p>
+<p>Here is an example. Create a directory for this piece of work</p>
+<pre><code class="language-bash">mkdir /shared/new_project
+cd /shared/new_project
+</code></pre>
+<p>Create, and enter, a new virtual environment</p>
+<pre><code class="language-bash">python3 -m venv ./venv
+source ./venv/bin/activate
+</code></pre>
+<p>Your prompt will now (probably) have a prefix like <code>(venv)</code> indicating that you
+are using the virtual environment. You will notice that
+<a href="https://docs.python.org/3/library/venv.html">venv</a> has installed
+<a href="https://pip.pypa.io/en/stable/user_guide/">pip</a> and added it to your path, so
+you can now use pip to install and manage Python packages. For example</p>
+<pre><code class="language-bash">pip install numpy
+pip list
+pip uninstall numpy
+</code></pre>
+<p>Other members of your team can use the new virtual environment in the same way
+you did (<em>i.e.</em> <code>source /shared/new_project/venv/bin/activate</code>).</p>
+<p>You will want to communicate with your team to decide how to manage your virtual
+environments. For example, deciding how many will be needed, and giving notice
+of adding/removing/upgrading packages.</p>
+<p>A final tip, keeping a
+<a href="https://pip.pypa.io/en/stable/user_guide/#requirements-files"><code>requirements.txt</code></a>
+file is a good way to keep an authoritive list of all packages and their
+versions. This way, if anything does go wrong, you can recreate the environment
+easily. Also, others may duplicate the environment to ensure your work is
+reproducible.</p>
+<p>You can create a requirements file based on your currently install packages
+with</p>
+<pre><code class="language-bash">pip freeze &gt; requirements.txt
+</code></pre>
+<p>You may then install the defined packages (with identical versions) with</p>
+<pre><code class="language-bash">pip install -r requirements.txt
+</code></pre>
+<h3 id="julia">Julia</h3>
+<p>The default <a href="https://docs.julialang.org/en/v1/base/constants/#Base.DEPOT_PATH">Julia depot
+path</a> has been
+changed from <code>~/.julia</code> to <code>/shared/.julia</code>. This means that for the default
+environment will be shared between all users.</p>
+<p>Additional environments can be created as required, for example</p>
+<pre><code class="language-julia">julia&gt; mkdir(&quot;/shared/my_project&quot;)
+julia&gt; cd(&quot;/shared/my_project&quot;)
+julia&gt; ]
+(@v1.4) pkg&gt; activate .
+(my_project)&gt; add JSON
+</code></pre>
+<p>See the <a href="https://pkgdocs.julialang.org/">Pkg.jl documentation</a> for more
+information on managing packages and environments.</p>
+<h3 id="singularity-and-containers">Singularity and containers</h3>
+<p>You will find <a href="https://sylabs.io/guides/latest/user-guide">Singularity</a>
+installed on the DSVM. Singularity is a container platform with a focus on HPC.
+It has a number of advantages over docker when we want to run containers as
+applications rather than services including, no setup for non-trusted users,
+<a href="https://sylabs.io/guides/3.7/user-guide/mpi.html">MPI support</a>, host system
+<a href="https://sylabs.io/guides/3.7/user-guide/gpu.html">GPU access</a>.</p>
+<p>Singularity can pull containers from <a href="https://cloud.sylabs.io/library">the Singularity
+library</a> as well as <a href="https://hub.docker.com/">Docker
+Hub</a>. For example</p>
+<pre><code class="language-bash">singularity pull library://dxtr/default/hpc-tensorflow:0.1
+singularity pull docker://alpine
+</code></pre>
+<p>The Singularity <a href="https://sylabs.io/guides/latest/user-guide/">Quick Start</a>
+provides a good introduction to the important commands.</p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>
+            var base_url = "..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../js/base.js" defer></script>
+        <script src="../search/main.js" defer></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

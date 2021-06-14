@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        <link rel="canonical" href="https://example.com/admin_guide/">
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>💼 Administrator guide - Mousehole 🐭</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css">
+
+        <script src="../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="..">Mousehole 🐭</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href=".." class="nav-link">Mousehole 🐭</a>
+                            </li>
+                            <li class="navitem active">
+                                <a href="./" class="nav-link">💼 Administrator guide</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../users_guide/" class="nav-link">📖 User guide</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="prev" href=".." class="nav-link">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a rel="next" href="../users_guide/" class="nav-link">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-level="1"><a href="#administrator-guide" class="nav-link">💼 Administrator guide</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#how-to-deploy" class="nav-link">🏗️ How to deploy</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#manage-users-with-ansible" class="nav-link">👥 Manage users with Ansible</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#resizing" class="nav-link">↕️ Resizing</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#ingress-and-egress" class="nav-link">🚚 Ingress and egress</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#adding-software" class="nav-link">🎁 Adding software</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#tear-down-the-environment" class="nav-link">💣 Tear down the environment</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="administrator-guide">💼 Administrator guide</h1>
+<h2 id="how-to-deploy">🏗️ How to deploy</h2>
+<h3 id="required-software-and-other-prerequisites">📦 Required software and other prerequisites</h3>
+<p>Before you start, you will need to install some dependencies,</p>
+<ul>
+<li><a href="https://docs.microsoft.com/en-us/cli/azure/install-azure-cli">Azure CLI</a></li>
+<li><a href="https://learn.hashicorp.com/tutorials/terraform/install-cli">Terraform</a></li>
+<li><a href="https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html">Ansible</a></li>
+</ul>
+<p>You will also need,</p>
+<ul>
+<li>A domain where you are able to modify or create new DNS records</li>
+</ul>
+<p>And ideally</p>
+<ul>
+<li>An email address to receive <a href="https://letsencrypt.org/">Let's Encrypt</a>
+  certificate expiry alerts</li>
+<li>An email account with SMTP access to send users their initial login
+  credentials</li>
+</ul>
+<h3 id="deploy-the-infrastructure-with-terraform">🤖 Deploy the infrastructure with Terraform</h3>
+<p>Make sure you are authenticated with Azure CLI</p>
+<pre><code class="language-bash">az login
+</code></pre>
+<p>Change to the terraform directory</p>
+<pre><code class="language-bash">cd terraform
+</code></pre>
+<p>Initialise terraform</p>
+<pre><code class="language-bash">terraform init
+</code></pre>
+<p>Make a copy of the example Terraform variables file <code>terraform.tfvars.example</code>.</p>
+<pre><code class="language-bash">cp terraform.tfvars.example terraform.tfvars
+</code></pre>
+<p>Edit your copy using your text editor, completing the appropriate variables.
+These should be fairly self-explanatory. If you do not complete any required
+variables you will be prompted to enter them in the command line when running
+Terraform.</p>
+<p>Plan your deployment</p>
+<pre><code class="language-bash">terraform plan -out myplan
+</code></pre>
+<p>Check the output to ensure the changes make sense. If all is well you can now
+apply the plan with</p>
+<pre><code class="language-bash">terraform apply myplan
+</code></pre>
+<p>Terraform will print a message giving the address of the name servers of the
+Azure DNS Zone for your deployment. You will need to add these addresses as NS
+records to your domain (the same domain that your specified in
+<code>terraform.tfvars</code>). This way requests to your domain will be forwarded to the
+DNS managed by terraform.</p>
+<h3 id="configure-the-virtual-machines-with-ansible">⚙️ Configure the virtual machines with Ansible</h3>
+<p>Change to the Ansible directory</p>
+<pre><code class="language-bash">cd ../ansible
+</code></pre>
+<p>Terraform will have written some files needed by Ansible,</p>
+<ul>
+<li><code>inventory.yaml</code> - The Ansible inventory, which tells Ansible how to connect
+  to the virtual machines</li>
+<li><code>vars/terraform_vars.yaml</code> - Some variables exported for Terraform that will
+  be used by Ansible</li>
+<li><code>../keys/{dsvm,guacamole}_admin_id_rsa.pem</code> - The private SSH keys for the
+  DSVM and Guacamole machines respectively</li>
+</ul>
+<p>Ensure the required Ansible roles and collections are installed</p>
+<pre><code class="language-bash">ansible-galaxy install -r requirements.yaml
+</code></pre>
+<p>Make a copy of the example variables file</p>
+<pre><code class="language-bash">cp vars/ansible_vars.yaml.example vars/ansible_vars.yaml
+</code></pre>
+<p>Open your copy with your text editor and ensure the values are correct and
+complete any undefined variables.</p>
+<p>If you want to use <a href="https://letsencrypt.org/">Let's Encrypt</a> to generate SSL
+certificates automatically (highly recommended!) change <code>lets_encrypt</code> to <code>true</code>
+and <code>lets_encrypt_email</code> to a suitable email address.  This address will receive
+warnings if your certificates are due to expire and have not been updated (which
+should happen automatically).</p>
+<p>Enter a password for the Postgres database as the value of the key
+<code>guac_db_password</code>.</p>
+<p>Enter a password for the guacamole admin account as the value of the key
+<code>guac_admin_password</code>.</p>
+<p>You can also define additional apt and snap packages here. See <a href="#-adding-software">Adding
+software</a> for details.</p>
+<p>Configure the Guacamole and DSVM machines</p>
+<pre><code class="language-bash">ansible-playbook -i inventory.yaml main.yaml
+</code></pre>
+<h2 id="manage-users-with-ansible">👥 Manage users with Ansible</h2>
+<p>Make a copy of the users variables file</p>
+<pre><code class="language-bash">cp vars/user_vars.yaml.example vars/user_vars.yaml
+</code></pre>
+<p>Open your copy with your editor.  If you want the user management role to
+automatically email users their initial login credentials, complete enter your
+email's SMTP settings into the <code>email</code> dict.</p>
+<p>If you also want to write the initial passwords to a file on your local machine,
+change <code>force_write_initial_passwords</code> to <code>yes</code>.</p>
+<p>To declare users that should exist (this can be both existing and new users),
+add their name, username and email address to the <code>users</code> dict following the
+example.</p>
+<p>To declare users that should not exist, add their username to the
+<code>users_deleted</code> dict.</p>
+<p>To create or remove users run</p>
+<pre><code class="language-bash">ansible-playbook -i inventory.yaml manage_users.yaml
+</code></pre>
+<p>If you have configured SMTP settings, newly created users will be send their
+initial credentials from that email address. If the Guacamole and Linux
+credentials are written to file they can be found in <code>guac_new_users.yaml</code> and
+<code>new_users.yaml</code> respectively.</p>
+<h2 id="resizing">↕️ Resizing</h2>
+<p>To change the size of either of the virtual machines, for example to handle an
+increased number of users or support GPU computing, you can simply update the
+Terraform configuration.</p>
+<p>Open <code>terraform/terraform.tfvars</code> and edit the dict <code>vm_sizes</code>. <code>guacamole</code>
+defines the size of the Guacamole VM and <code>dsvm</code> defines the size of the DSVM.
+See the <a href="https://docs.microsoft.com/en-us/azure/virtual-machines/sizes">Azure
+documentation</a>
+for a list of possible values. Ensure that your selected VM size is available in
+your selected location (<code>location</code> in <code>terraform/terraform.tfvars</code>. You can
+check the available VM sizes for a location by running <code>az vm list-sizes
+--location "&lt;location&gt;"</code>.</p>
+<p>You can apply the new VM sizes using the plan/apply workflow
+<a href="#-deploy-the-infrastructure-with-terraform">above</a>. Plan your changes using
+<code>terraform plan -out resizeplan</code> and ensure that the changes printed to your
+console are what you expect. You can then apply the changes with <code>terraform
+apply resizeplan</code>.</p>
+<h2 id="ingress-and-egress">🚚 Ingress and egress</h2>
+<p>Both input and output data are held on <a href="https://docs.microsoft.com/en-us/azure/storage/files/storage-files-introduction">Azure file
+shares</a>
+configured as SMB shares. Both shares will be belong to the same storage
+account, which you will be able to see in the resource group you choose when
+deploying the infrastructure using Terraform.</p>
+<p>You may use whatever methods you think are best, including using the azure
+portal. However, from past experience we have found <a href="https://azure.microsoft.com/en-us/features/storage-explorer/">Azure Storage
+Explorer</a> to be a
+convenient and secure for both data ingress and egress.</p>
+<h2 id="adding-software">🎁 Adding software</h2>
+<p>The Ansible variables file <code>host_vars/dsvm.yaml</code> has a number of DSVM packages
+predefined. You can also install additional apt packages (from the default
+repositories) or <a href="https://snapcraft.io/">snaps</a> by editing your
+<code>ansible_vars.yaml</code> file.</p>
+<p>To install additional packages using <code>apt</code> (Ubuntu's package manager), add the
+names of the packages to the list <code>apt_packages_extra</code> in <code>ansible_vars.yaml</code>.
+You can find the names of packages for the default Ubuntu 20.04 LTS image on the
+<a href="https://packages.ubuntu.com/focal/">the Ubuntu packages website</a>.</p>
+<p>To add new snap packages add them to the list <code>snap_packages_extra</code> in
+<code>ansible_vars.yaml</code>. Each item on this list must have the key <code>name</code> which is
+the name of the snap as you would use to install on the command line. You can
+find the names of snaps on the <a href="https://snapcraft.io/store">snap store</a> by
+selecting a snap and clicking the green install button. If the snap should be
+installed with classic confinement (this is also made apparent when clicking
+'install' in the snap store) you should also add the key <code>classic</code> with value
+<code>yes</code>. Look at <code>host_vars/dsvm.yaml</code> for examples of both classic and standard
+snaps in the list <code>snap_packages_default</code>.</p>
+<p>After making changes you can ensure the packages are installed with</p>
+<pre><code class="language-bash">ansible-playbook -i inventory.yaml main.yaml --tags dsvm
+</code></pre>
+<h2 id="tear-down-the-environment">💣 Tear down the environment</h2>
+<p>To tear down all of the resources you have deployed, ensure you are in the
+terraform directory and run</p>
+<pre><code class="language-bash">terraform destroy
+</code></pre></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>
+            var base_url = "..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../js/base.js" defer></script>
+        <script src="../search/main.js" defer></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>
