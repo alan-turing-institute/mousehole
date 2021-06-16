@@ -65,6 +65,38 @@ go back to the Guacamole home page.
 You will now be able to connect to the VM in either an SSH or RDP connection
 using your new VM password.
 
+## 🖥️ The Xfce desktop
+
+When you start an RDP session, after entering your credentials, you will be
+presented with the [Xfce desktop](https://xfce.org/).
+
+By default there will be two panels on the desktop. A full width panel at the
+top of the desktop, and a variable width panel with application icons at the
+bottom.
+
+At the left of the top panel is a button labelled 'Applications'. Clicking on
+this button will present you with a menu of the installed applications divided
+into categories.
+
+To the right of the Applications button will be a list of open application
+windows, useful for switching between and managing open windows.
+
+Next is a view of your workspaces. You can use workspaces to collect sets of
+windows, for example, you could separate two strands of work on different
+workspaces. You can click on the workspaces in the view to switch between them.
+
+Finally, at the far right of the top panel is the system tray which contains a
+set of indicators.
+
+Initially, the bottom panel will contain a selection of application launchers as
+well as a button to show the desktop (minimise all windows) and a shortcut to
+open your home directory in the file explorer.
+
+For additional information on using and modifying the Xfce desktop see the
+official documentation for [the desktop
+environment](https://docs.xfce.org/xfce/getting-started#the_desktop_environment)
+and [common tasks](https://docs.xfce.org/xfce/getting-started#common_tasks)
+
 ## 🗄️ Data
 
 The size of your environment's OS disk (which holds the `/home` directory) will
