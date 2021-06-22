@@ -283,21 +283,6 @@ resource "azurerm_storage_share" "this" {
   quota                = each.value.size_gb
 }
 
-# Create DNS zone
-resource "azurerm_dns_zone" "this" {
-  name                = var.domain
-  resource_group_name = azurerm_resource_group.this.name
-}
-
-# Create A record for Guacamole
-resource "azurerm_dns_a_record" "login" {
-  name                = "login"
-  zone_name           = azurerm_dns_zone.this.name
-  resource_group_name = azurerm_resource_group.this.name
-  ttl                 = 300
-  target_resource_id  = azurerm_public_ip.guacamole.id
-}
-
 # Write Ansible inventory
 resource "local_file" "ansible_inventory" {
   filename        = "../ansible/inventory.yaml"
@@ -336,16 +321,4 @@ resource "local_file" "terraform_vars" {
     share_username: ${azurerm_storage_account.this.name}
     share_password: ${azurerm_storage_account.this.primary_access_key}
     DOC
-}
-
-# Get DNS nameservers
-data "azurerm_dns_zone" "this" {
-  name                = azurerm_dns_zone.this.name
-  resource_group_name = azurerm_dns_zone.this.resource_group_name
-}
-
-
-output "nameservers" {
-  value       = azurerm_dns_zone.this.name_servers
-  description = "Ensure that your authorative DNS points your domain to these nameservers"
 }
