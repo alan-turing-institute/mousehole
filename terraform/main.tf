@@ -1,19 +1,3 @@
-# Configure the Microsoft Azure Provider
-terraform {
-  required_providers {
-    azurerm = {
-      source  = "hashicorp/azurerm"
-      version = ">= 2.26"
-    }
-  }
-}
-
-# Declare Azure provider
-provider "azurerm" {
-  features {}
-  subscription_id = var.subscription_id
-}
-
 # Create resource group
 resource "azurerm_resource_group" "this" {
   name     = local.resource_tag.resource_group
