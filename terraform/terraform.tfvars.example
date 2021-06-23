@@ -16,6 +16,10 @@
 #   dsvm      = "Standard_D32s_v4"
 # }
 
+# Type of storage to use, one of "Standard_LRS", "StandardSSD_LRS" or
+# "Premium_LRS"
+# storage_type = "StandardSSD_LRS"
+
 # Shared working disk size in GB
 # shared_disk_size_gb =
 
