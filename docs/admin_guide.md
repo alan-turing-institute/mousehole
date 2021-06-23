@@ -66,10 +66,10 @@ terraform apply myplan
 ```
 
 Terraform will print a message giving the address of the name servers of the
-Azure DNS Zone for your deployment. You will need to add these addresses as NS
-records to your domain (the same domain that your specified in
-`terraform.tfvars`). This way requests to your domain will be forwarded to the
-DNS managed by terraform.
+Azure DNS Zone for your deployment (you can print this again at any time using
+`terraform output`). You will need to add these addresses as NS records to your
+domain (the same domain that your specified in `terraform.tfvars`). This way
+requests to your domain will be forwarded to the DNS managed by terraform.
 
 ### ⚙️ Configure the virtual machines with Ansible
 
