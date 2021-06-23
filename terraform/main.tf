@@ -261,7 +261,7 @@ resource "azurerm_managed_disk" "this" {
 
 # Attach shared data disk to DSVM
 resource "azurerm_virtual_machine_data_disk_attachment" "this" {
-  managed_disk_id    = azurerm_managed_disk.this[count.index].id
+  managed_disk_id    = azurerm_managed_disk.this.id
   virtual_machine_id = azurerm_linux_virtual_machine.dsvm.id
   lun                = "0"
   caching            = "ReadWrite"
