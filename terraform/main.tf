@@ -1,9 +1,3 @@
-# Create resource group
-resource "azurerm_resource_group" "this" {
-  name     = local.resource_tag.resource_group
-  location = var.location
-}
-
 # Create Network Security Group
 resource "azurerm_network_security_group" "guacamole" {
   name                = "${local.resource_tag.network_security_group}_guacamole"
