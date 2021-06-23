@@ -154,17 +154,6 @@ locals {
     storage_share          = "SHARE_${var.sre_name}"
   }
 
-  shares = {
-    ingress = {
-      name    = "ingress"
-      size_gb = var.ingress_share_size_gb
-    }
-    egress = {
-      name    = "egress"
-      size_gb = var.egress_share_size_gb
-    }
-  }
-
   guacamole_nsg_rules = {
     ssh   = var.nsg_rule_ssh
     http  = var.nsg_rule_http
