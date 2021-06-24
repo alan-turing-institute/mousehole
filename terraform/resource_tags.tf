@@ -1,15 +1,15 @@
 locals {
   resource_tag = {
-    resource_group         = "RG_${var.sre_name}"
-    virtual_network        = "VNET_${var.sre_name}"
-    subnet                 = "SUBNET_${var.sre_name}"
-    public_ip              = "PUBIP_${var.sre_name}"
-    network_security_group = "NSG_${var.sre_name}"
-    network_interface      = "NIC_${var.sre_name}"
-    virtual_machine        = "VM_${var.sre_name}"
-    os_disk                = "OSDISK_${var.sre_name}"
-    data_disk              = "DATADISK_${var.sre_name}"
-    storage_account        = "STORAGE${var.sre_name}"
-    storage_share          = "SHARE_${var.sre_name}"
+    resource_group         = "rg_${var.sre_name}"
+    virtual_network        = "vnet_${var.sre_name}"
+    subnet                 = "subnet_${var.sre_name}"
+    public_ip              = "pubip_${var.sre_name}"
+    network_security_group = "nsg_${var.sre_name}"
+    network_interface      = "nic_${var.sre_name}"
+    virtual_machine        = "vm_${var.sre_name}"
+    os_disk                = "osdisk_${var.sre_name}"
+    data_disk              = "datadisk_${var.sre_name}"
+    storage_account        = "storage${var.sre_name}"
+    storage_share          = "share_${var.sre_name}"
   }
 }
