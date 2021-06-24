@@ -38,6 +38,7 @@ resource "azurerm_storage_account" "this" {
 # Create ingress and egress shares
 resource "azurerm_storage_share" "this" {
   for_each             = local.shares
+
   name                 = each.value.name
   storage_account_name = azurerm_storage_account.this.name
   quota                = each.value.size_gb

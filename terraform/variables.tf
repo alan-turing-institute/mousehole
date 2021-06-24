@@ -58,15 +58,15 @@ variable "vm_image" {
 variable "ingress_share_size_gb" {
   type = number
   validation {
-    condition     = var.ingress_share_size_gb > 0
-    error_message = "The shared disk size must be a positive integer."
+    condition     = var.ingress_share_size_gb >= 100
+    error_message = "The share size must be a positive integer >= 100."
   }
 }
 
 variable "egress_share_size_gb" {
   type = number
   validation {
-    condition     = var.egress_share_size_gb > 0
-    error_message = "The shared disk size must be a positive integer."
+    condition     = var.egress_share_size_gb >= 100
+    error_message = "The share size must be a positive integer >= 100."
   }
 }
