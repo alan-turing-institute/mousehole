@@ -19,8 +19,8 @@ locals {
       private_ip_address = "10.1.0.5"
 
       nsg_rules = {
-        ssh   = local.network_security_group_rules.ssh
-        rdp   = local.network_security_group_rules.rdp
+        ssh = local.network_security_group_rules.ssh
+        rdp = local.network_security_group_rules.rdp
       }
     }
   }
@@ -37,9 +37,9 @@ module "virtual_machines" {
   resource_group_name = azurerm_resource_group.this.name
   subnet_id           = azurerm_subnet.this.id
 
-  name = each.value.name
-  vm_size = each.value.vm_size
-  admin_username = each.value.admin_username
+  name               = each.value.name
+  vm_size            = each.value.vm_size
+  admin_username     = each.value.admin_username
   private_ip_address = each.value.private_ip_address
-  nsg_rules = each.value.nsg_rules
+  nsg_rules          = each.value.nsg_rules
 }
