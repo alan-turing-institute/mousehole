@@ -10,7 +10,7 @@ resource "azurerm_dns_a_record" "login" {
   zone_name           = azurerm_dns_zone.this.name
   resource_group_name = azurerm_resource_group.this.name
   ttl                 = 300
-  target_resource_id  = azurerm_public_ip.guacamole.id
+  target_resource_id  = module.virtual_machines["guacamole"].public_ip_address.ip_address
 }
 
 # Get DNS nameservers

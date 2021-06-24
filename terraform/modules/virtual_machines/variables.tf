@@ -1,0 +1,11 @@
+variable "resource_tag" {}
+variable "location" {}
+variable "storage_type" {}
+variable "vm_image" {}
+variable "resource_group_name" {}
+variable "subnet_id" {}
+variable "name" {}
+variable "vm_size" {}
+variable "admin_username" {}
+variable "private_ip_address" {}
+variable "nsg_rules" {}

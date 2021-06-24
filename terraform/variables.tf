@@ -23,14 +23,6 @@ variable "vm_size" {
   }
 }
 
-variable "admin_username" {
-  type = map(string)
-  default = {
-    guacamole = "guacamole_admin"
-    dsvm      = "dsvm_admin"
-  }
-}
-
 variable "storage_type" {
   type    = string
   default = "StandardSSD_LRS"
@@ -152,17 +144,6 @@ locals {
     data_disk              = "DATADISK_${var.sre_name}"
     storage_account        = "STORAGE${var.sre_name}"
     storage_share          = "SHARE_${var.sre_name}"
-  }
-
-  guacamole_nsg_rules = {
-    ssh   = var.nsg_rule_ssh
-    http  = var.nsg_rule_http
-    https = var.nsg_rule_https
-  }
-
-  dsvm_nsg_rules = {
-    ssh = var.nsg_rule_ssh
-    rdp = var.nsg_rule_rdp
   }
 }
 
