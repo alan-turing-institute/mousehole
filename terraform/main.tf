@@ -7,9 +7,9 @@ locals {
       private_ip_address = "10.1.0.4"
 
       nsg_rules = {
-        ssh   = var.nsg_rule_ssh
-        http  = var.nsg_rule_http
-        https = var.nsg_rule_https
+        ssh   = local.network_security_group_rules.ssh
+        http  = local.network_security_group_rules.http
+        https = local.network_security_group_rules.https
       }
     }
     dsvm = {
@@ -19,8 +19,8 @@ locals {
       private_ip_address = "10.1.0.5"
 
       nsg_rules = {
-        ssh = var.nsg_rule_ssh
-        rdp = var.nsg_rule_rdp
+        ssh   = local.network_security_group_rules.ssh
+        rdp   = local.network_security_group_rules.rdp
       }
     }
   }

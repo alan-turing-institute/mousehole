@@ -71,66 +71,6 @@ variable "egress_share_size_gb" {
   }
 }
 
-variable "nsg_rule_ssh" {
-  type = map(string)
-  default = {
-    name                       = "SSH"
-    priority                   = 1001
-    direction                  = "Inbound"
-    access                     = "Allow"
-    protocol                   = "Tcp"
-    source_port_range          = "*"
-    destination_port_range     = "22"
-    source_address_prefix      = "*"
-    destination_address_prefix = "*"
-  }
-}
-
-variable "nsg_rule_http" {
-  type = map(string)
-  default = {
-    name                       = "HTTP"
-    priority                   = 1002
-    direction                  = "Inbound"
-    access                     = "Allow"
-    protocol                   = "Tcp"
-    source_port_range          = "*"
-    destination_port_range     = "80"
-    source_address_prefix      = "*"
-    destination_address_prefix = "*"
-  }
-}
-
-variable "nsg_rule_https" {
-  type = map(string)
-  default = {
-    name                       = "HTTPS"
-    priority                   = 1003
-    direction                  = "Inbound"
-    access                     = "Allow"
-    protocol                   = "Tcp"
-    source_port_range          = "*"
-    destination_port_range     = "443"
-    source_address_prefix      = "*"
-    destination_address_prefix = "*"
-  }
-}
-
-variable "nsg_rule_rdp" {
-  type = map(string)
-  default = {
-    name                       = "RDP"
-    priority                   = 1004
-    direction                  = "Inbound"
-    access                     = "Allow"
-    protocol                   = "Tcp"
-    source_port_range          = "*"
-    destination_port_range     = "3389"
-    source_address_prefix      = "VirtualNetwork"
-    destination_address_prefix = "*"
-  }
-}
-
 locals {
   resource_tag = {
     resource_group         = "RG_${var.sre_name}"
@@ -146,4 +86,3 @@ locals {
     storage_share          = "SHARE_${var.sre_name}"
   }
 }
-
