@@ -156,10 +156,10 @@ apply the plan with</p>
 <pre><code class="language-bash">terraform apply myplan
 </code></pre>
 <p>Terraform will print a message giving the address of the name servers of the
-Azure DNS Zone for your deployment. You will need to add these addresses as NS
-records to your domain (the same domain that your specified in
-<code>terraform.tfvars</code>). This way requests to your domain will be forwarded to the
-DNS managed by terraform.</p>
+Azure DNS Zone for your deployment (you can print this again at any time using
+<code>terraform output</code>). You will need to add these addresses as NS records to your
+domain (the same domain that your specified in <code>terraform.tfvars</code>). This way
+requests to your domain will be forwarded to the DNS managed by terraform.</p>
 <h3 id="configure-the-virtual-machines-with-ansible">⚙️ Configure the virtual machines with Ansible</h3>
 <p>Change to the Ansible directory</p>
 <pre><code class="language-bash">cd ../ansible
