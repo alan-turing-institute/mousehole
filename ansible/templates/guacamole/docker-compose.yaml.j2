@@ -53,12 +53,15 @@ services:
       - 443:443
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
+      - {{ traefik_dynamic_config }}:/dynamic_conf.yml
 {% if lets_encrypt %}
       - {{ traefik_acme_volume }}:/acme
 {% endif %}
     command:
       - "--providers.docker=true"
       - "--providers.docker.exposedByDefault=false"
+      - "--providers.file.filename=/dynamic_conf.yml"
+      - "--providers.file.watch=true"
       - "--entryPoints.web.address=:80"
       - "--entryPoints.web.http.redirections.entryPoint.to=websecure"
       - "--entryPoints.web.http.redirections.entryPoint.scheme=https"
