@@ -15,3 +15,11 @@ tls:
         - TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256
       preferServerCipherSuites: true
       sniStrict: true
+http:
+  middlewares:
+    hsts-headers:
+      headers:
+        stsSeconds: 31536000
+        forceSTSHeader: true
+        stsPreload: true
+        stsIncludeSubdomains: true

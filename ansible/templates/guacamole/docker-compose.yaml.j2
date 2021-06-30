@@ -42,7 +42,7 @@ services:
 {% if lets_encrypt %}
       - "traefik.http.routers.guacamole.tls.certResolver=le"
 {% endif %}
-      - "traefik.http.routers.guacamole.middleWares=add-guacamole"
+      - "traefik.http.routers.guacamole.middleWares=add-guacamole,hsts-headers"
       # Middlewares
       - "traefik.http.middleWares.add-guacamole.addPrefix.prefix=/guacamole"
   reverse_proxy:
