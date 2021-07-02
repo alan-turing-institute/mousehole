@@ -100,6 +100,14 @@
 
     - name: Docker services
       block:
+        - name: Template traefik dynamic configuration
+          ansible.builtin.template:
+            src: guacamole/traefik_dynamic_conf.yml.j2
+            dest: "{{ traefik_dynamic_config }}"
+            owner: "{{ ansible_user }}"
+            group: "{{ ansible_user }}"
+            mode: 0644
+
         - name: Template docker-compose file
           ansible.builtin.template:
             src: guacamole/docker-compose.yaml.j2
