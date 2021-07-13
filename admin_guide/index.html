@@ -33,9 +33,6 @@
                 <div id="navbar-collapse" class="navbar-collapse collapse">
                         <!-- Main navigation -->
                         <ul class="nav navbar-nav">
-                            <li class="navitem">
-                                <a href=".." class="nav-link">Mousehole 🐭</a>
-                            </li>
                             <li class="navitem active">
                                 <a href="./" class="nav-link">💼 Administrator guide</a>
                             </li>
@@ -51,7 +48,7 @@
                             </a>
                         </li>
                             <li class="nav-item">
-                                <a rel="prev" href=".." class="nav-link">
+                                <a rel="prev" class="nav-link disabled">
                                     <i class="fa fa-arrow-left"></i> Previous
                                 </a>
                             </li>
@@ -59,6 +56,9 @@
                                 <a rel="next" href="../users_guide/" class="nav-link">
                                     Next <i class="fa fa-arrow-right"></i>
                                 </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="https://github.com/alan-turing-institute/mousehole" class="nav-link"><i class="fa fa-github"></i> GitHub</a>
                             </li>
                     </ul>
                 </div>
@@ -226,13 +226,17 @@ See the <a href="https://docs.microsoft.com/en-us/azure/virtual-machines/sizes">
 documentation</a>
 for a list of possible values. Ensure that your selected VM size is available in
 your selected location (<code>location</code> in <code>terraform/terraform.tfvars</code>. You can
-check the available VM sizes for a location by running <code>az vm list-sizes
---location "&lt;location&gt;"</code>.</p>
+check the available VM sizes for a location by running</p>
+<pre><code class="language-bash">az vm list-sizes --location &quot;&lt;location&gt;&quot;
+</code></pre>
 <p>You can apply the new VM sizes using the plan/apply workflow
-<a href="#-deploy-the-infrastructure-with-terraform">above</a>. Plan your changes using
-<code>terraform plan -out resizeplan</code> and ensure that the changes printed to your
-console are what you expect. You can then apply the changes with <code>terraform
-apply resizeplan</code>.</p>
+<a href="#-deploy-the-infrastructure-with-terraform">above</a>. Plan your changes using</p>
+<pre><code class="language-bash">terraform plan -out resizeplan
+</code></pre>
+<p>and ensure that the changes printed to your console are what you expect. You can
+then apply the changes with</p>
+<pre><code class="language-bash">terraform apply resizeplan
+</code></pre>
 <h2 id="ingress-and-egress">🚚 Ingress and egress</h2>
 <p>Both input and output data are held on <a href="https://docs.microsoft.com/en-us/azure/storage/files/storage-files-introduction">Azure file
 shares</a>
