@@ -56,9 +56,9 @@ new password to confirm it is correct.
 
 ![](images/guacamole_ssh_reset_password.png)
 
-If you successfully update your password, the message `passwd: password updated
-successfully` will be printed and you will be disconnected. Click on 'Home' to
-go back to the Guacamole home page.
+If you successfully update your password, the message
+`passwd: password updated successfully` will be printed and you will be
+disconnected. Click on 'Home' to go back to the Guacamole home page.
 
 ![](images/guacamole_ssh_disconnected.png)
 
