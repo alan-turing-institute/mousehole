@@ -182,10 +182,10 @@ You can apply the new VM sizes using the plan/apply workflow
 terraform plan -out resizeplan
 ```
 
-and ensure that the changes printed to your
-console are what you expect. You can then apply the changes with 
+and ensure that the changes printed to your console are what you expect. You can
+then apply the changes with
 
-```
+```bash
 terraform apply resizeplan
 ```
 
