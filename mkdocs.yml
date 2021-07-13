@@ -1,3 +1,9 @@
 ---
 site_name: Mousehole 🐭
 site_url: https://example.com/
+repo_url: https://github.com/alan-turing-institute/mousehole
+edit_uri: ""
+
+nav:
+  - "admin_guide.md"
+  - "users_guide.md"

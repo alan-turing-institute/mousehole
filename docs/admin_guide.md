@@ -169,14 +169,25 @@ See the [Azure
 documentation](https://docs.microsoft.com/en-us/azure/virtual-machines/sizes)
 for a list of possible values. Ensure that your selected VM size is available in
 your selected location (`location` in `terraform/terraform.tfvars`. You can
-check the available VM sizes for a location by running `az vm list-sizes
---location "<location>"`.
+check the available VM sizes for a location by running
+
+```bash
+az vm list-sizes --location "<location>"
+```
 
 You can apply the new VM sizes using the plan/apply workflow
 [above](#-deploy-the-infrastructure-with-terraform). Plan your changes using
-`terraform plan -out resizeplan` and ensure that the changes printed to your
-console are what you expect. You can then apply the changes with `terraform
-apply resizeplan`.
+
+```bash
+terraform plan -out resizeplan
+```
+
+and ensure that the changes printed to your console are what you expect. You can
+then apply the changes with
+
+```bash
+terraform apply resizeplan
+```
 
 ## 🚚 Ingress and egress
 
