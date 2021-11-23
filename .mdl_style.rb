@@ -18,3 +18,6 @@ exclude_rule 'MD028'
 
 # Allow bare URLs (i.e. without angle brackets)
 exclude_rule 'MD034'
+
+# Disable code block style rule as it conflicts with python-markdown admonition style
+exclude_rule 'MD046'

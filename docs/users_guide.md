@@ -26,11 +26,12 @@ the text boxes and click 'continue'.
 
 ![](images/guacamole_reset_password.png)
 
-When you click 'continue' you will be taken to the multi-factor authentication
-setup. **However**, at this point you must refresh the page and login again with
-your **new** password.
+!!! warning
+    When you click 'continue' you will be taken to the multi-factor authentication
+    setup. **However**, at this point you must refresh the page and login again with
+    your **new** password.
 
-After you login with your new password, you will again be directed to setup
+After you login with your **new** password, you will again be directed to setup
 multi-factor authentication. Scan the QR code using an authenticator app such as
 [andOTP](https://github.com/andOTP/andOTP). Produce a one time password, enter
 it into the text box and click 'continue'.
