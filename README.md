@@ -29,24 +29,22 @@ more permissive environment suitable for non-sensitive data.
 
 ## 🔓 Data that is private but not sensitive or personal
 
-> ⚠️ Important
->
-> **This environment is not suitable for work involving sensitive or personal
-> data**. It is completely possible for someone to extract the private data from
-> the environment, whether intentionally, accidentally or through coercion. In
-> particular, users can copy/paste to and from the remote machine and make
-> outbound internet connections.
+!!! warning "⚠️ Important"
+    **This environment is not suitable for work involving sensitive or personal
+    data**. It is completely possible for someone to extract the private data from
+    the environment, whether intentionally, accidentally or through coercion. In
+    particular, users can copy/paste to and from the remote machine and make
+    outbound internet connections.
 
-> ⚠️ Important
->
-> This environment relies on trust in both the administrators and users and
-> should not be used in a situation where you do not have reasonable confidence
-> that either the administrators or users will not misuse the data.
->
-> Administrators have a very high level of access and control including, but not
-> limited to, reading private data, extracting data and imitating other users.
-> Normal users may release data from the environment to the internet or copy it
-> from the environment to their local machines.
+!!! warning "⚠️ Important"
+    This environment relies on trust in both the administrators and users and
+    should not be used in a situation where you do not have reasonable confidence
+    that either the administrators or users will not misuse the data.
+
+    Administrators have a very high level of access and control including, but not
+    limited to, reading private data, extracting data and imitating other users.
+    Normal users may release data from the environment to the internet or copy it
+    from the environment to their local machines.
 
 ## 🚀 Features
 

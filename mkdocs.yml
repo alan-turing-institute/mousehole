@@ -7,3 +7,6 @@ edit_uri: ""
 nav:
   - "admin_guide.md"
   - "users_guide.md"
+
+markdown_extensions:
+  - admonition
