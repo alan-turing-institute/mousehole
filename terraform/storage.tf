@@ -33,6 +33,11 @@ resource "azurerm_storage_account" "this" {
   account_tier             = "Premium"
   account_replication_type = "LRS"
   access_tier              = "Hot"
+
+  network_rules {
+    default_action = "Deny"
+    virtual_network_subnet_ids = [azurerm_subnet.this.id]
+  }
 }
 
 # Create ingress and egress shares
