@@ -35,7 +35,7 @@ resource "azurerm_storage_account" "this" {
   access_tier              = "Hot"
 
   network_rules {
-    default_action = "Deny"
+    default_action             = "Deny"
     virtual_network_subnet_ids = [azurerm_subnet.this.id]
   }
 }
