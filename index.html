@@ -12,7 +12,7 @@
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <link href="css/font-awesome.min.css" rel="stylesheet">
         <link href="css/base.css" rel="stylesheet">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/tomorrow.min.css">
 
         <script src="js/jquery-1.10.2.min.js" defer></script>
         <script src="js/bootstrap.min.js" defer></script>
@@ -113,14 +113,16 @@ with tier 1 or 0 data. The aim of Mousehole is therefore to take the positive
 features of the safe haven and include them in a light-weight, stand-alone and
 more permissive environment suitable for non-sensitive data.</p>
 <h2 id="data-that-is-private-but-not-sensitive-or-personal">🔓 Data that is private but not sensitive or personal</h2>
-<blockquote>
-<p>⚠️ Important</p>
+<div class="admonition warning">
+<p class="admonition-title">⚠️ Important</p>
 <p><strong>This environment is not suitable for work involving sensitive or personal
 data</strong>. It is completely possible for someone to extract the private data from
 the environment, whether intentionally, accidentally or through coercion. In
 particular, users can copy/paste to and from the remote machine and make
 outbound internet connections.</p>
-<p>⚠️ Important</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">⚠️ Important</p>
 <p>This environment relies on trust in both the administrators and users and
 should not be used in a situation where you do not have reasonable confidence
 that either the administrators or users will not misuse the data.</p>
@@ -128,7 +130,7 @@ that either the administrators or users will not misuse the data.</p>
 limited to, reading private data, extracting data and imitating other users.
 Normal users may release data from the environment to the internet or copy it
 from the environment to their local machines.</p>
-</blockquote>
+</div>
 <h2 id="features">🚀 Features</h2>
 <ul>
 <li>🚅 Quick and easy to deploy (leveraging <a href="https://www.terraform.io/">Terraform</a>
@@ -226,6 +228,6 @@ from the environment to their local machines.</p>
 </html>
 
 <!--
-MkDocs version : 1.2.1
-Build Date UTC : 2021-07-13 08:09:08.015960+00:00
+MkDocs version : 1.2.3
+Build Date UTC : 2021-11-23 11:44:14.715652+00:00
 -->
