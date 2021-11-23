@@ -8,5 +8,11 @@ nav:
   - "admin_guide.md"
   - "users_guide.md"
 
+theme:
+  name: mkdocs
+  locale: en
+  highlightjs: true
+  hljs_style: tomorrow
+
 markdown_extensions:
   - admonition
