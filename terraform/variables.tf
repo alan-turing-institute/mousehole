@@ -18,8 +18,8 @@ variable "domain" {
 variable "vm_size" {
   type = map(string)
   default = {
-    guacamole = "Standard_D4s_v4"
-    dsvm      = "Standard_D32s_v4"
+    guacamole = "Standard_D4s_v3"
+    dsvm      = "Standard_D32s_v3"
   }
 }
 
