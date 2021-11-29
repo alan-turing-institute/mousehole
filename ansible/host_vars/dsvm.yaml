@@ -79,4 +79,4 @@ snap_packages_default:
 
 snap_packages: "{{ snap_packages_default | union(snap_packages_extra) }}"
 
-singularity_version: 3.7.3
+singularity_version: 3.8.4

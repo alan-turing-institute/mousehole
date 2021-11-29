@@ -8,7 +8,7 @@
 - name: Check installed version of singularity
   # This will return a non-zero return code if
   # 1. Singularity is not installed
-  # 2. The singularity version does not match the variable singularity_Verison
+  # 2. The singularity version does not match the variable singularity_version
   ansible.builtin.shell:
     cmd: "singularity --version | grep {{ singularity_version }}"
   changed_when: False
@@ -16,7 +16,7 @@
   register: version_check
 
 - name: Install singularity from source
-  #available debs are quite out of date
+  # available debs are quite out of date
   block:
     - name: Install singularity build dependencies
       ansible.builtin.apt:
@@ -37,11 +37,6 @@
         checksum: "sha256:https://github.com/hpcng/singularity/releases/download/v{{ singularity_version }}/sha256sums"
       register: singularity_archive
 
-    - name: Remove old source directory
-      ansible.builtin.file:
-        path: "{{ ansible_user_dir }}/singularity"
-        state: absent
-
     - name: Unarchive singularity source
       ansible.builtin.unarchive:
         src: "{{ singularity_archive.dest }}"
@@ -50,17 +45,27 @@
 
     - name: Generate Makefile
       ansible.builtin.command:
-        chdir: "{{ ansible_user_dir }}/singularity"
+        chdir: "{{ ansible_user_dir }}/singularity-{{ singularity_version }}"
         cmd: ./mconfig
-        creates: "{{ ansible_user_dir }}/singularity/Makefile"
+        creates: "{{ ansible_user_dir }}/singularity-{{ singularity_version }}/builddir/Makefile"
 
     - name: Build singularity
       community.general.make:
-        chdir: "{{ ansible_user_dir }}/singularity/builddir"
+        chdir: "{{ ansible_user_dir }}/singularity-{{ singularity_version }}/builddir"
         target: all
 
     - name: Install singularity
       community.general.make:
-        chdir: "{{ ansible_user_dir }}/singularity/builddir"
+        chdir: "{{ ansible_user_dir }}/singularity-{{ singularity_version }}/builddir"
         target: install
+
+    - name: Remove build directory
+      ansible.builtin.file:
+        path: "{{ ansible_user_dir }}/singularity-{{ singularity_version }}"
+        state: absent
+
+    - name: Remove archive
+      ansible.builtin.file:
+        path: "{{ singularity_archive.dest }}"
+        state: absent
   when: version_check.rc != 0
