@@ -34,6 +34,8 @@ apt_packages_development:
   - cmake
   - ninja-build
   - gfortran
+  - gcc
+  - g++
 
 apt_packages_shells:
   - bash
@@ -55,6 +57,10 @@ apt_packages_editors:
   - vim-gtk3
   - emacs
 
+apt_packages_databases:
+  - postgresql-client
+  - mariadb-client
+
 apt_packages_latex:
   - texlive-full
   - texstudio
@@ -62,7 +68,11 @@ apt_packages_latex:
 apt_packages_office:
   - libreoffice
 
-apt_packages: "{{ apt_packages_development | union(apt_packages_shells) | union(apt_packages_editors) | union(apt_packages_latex) | union(apt_packages_office) | union(apt_packages_extra) }}"
+apt_packages_browsers:
+  - firefox
+
+apt_packages: "{{ apt_packages_development | union(apt_packages_shells) | union(apt_packages_editors) | union(apt_packages_databases) | union(apt_packages_latex) | union(apt_packages_office) | union(apt_packages_browsers) | union(apt_packages_extra) }}"
+
 
 snap_packages_default:
   - name: codium
