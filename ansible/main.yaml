@@ -47,7 +47,7 @@
   tags: guacamole
 
   vars:
-    API_root: http://localhost:8080/guacamole/api
+    api_root: http://localhost:8080/guacamole/api
     data_source: postgresql
     guacadmin_file_path: "{{ ansible_user_dir }}/guacadmin"
 
@@ -146,7 +146,7 @@
       block:
         - name: Get API token
           ansible.builtin.uri:
-            url: "{{ API_root }}/tokens"
+            url: "{{ api_root }}/tokens"
             method: POST
             user: "{{ guac_admin_user }}"
             password: guacadmin
@@ -156,7 +156,7 @@
 
         - name: Change guacadmin password
           ansible.builtin.uri:
-            url: "{{ API_root }}/session/data/{{ data_source }}/users/{{ guac_admin_user }}/password?token={{ token.json.authToken }}"
+            url: "{{ api_root }}/session/data/{{ data_source }}/users/{{ guac_admin_user }}/password?token={{ token.json.authToken }}"
             method: PUT
             body:
               oldPassword: guacadmin
@@ -176,7 +176,7 @@
       always:
         - name: Delete API token
           ansible.builtin.uri:
-            url: "{{ API_root }}/tokens/{{ token.json.authToken }}?token={{ token.json.authToken }}"
+            url: "{{ api_root }}/tokens/{{ token.json.authToken }}?token={{ token.json.authToken }}"
             method: DELETE
             status_code: 204
       when: not guacadmin_file.stat.exists
@@ -187,7 +187,7 @@
       block:
         - name: Get API token
           ansible.builtin.uri:
-            url: "{{ API_root }}/tokens"
+            url: "{{ api_root }}/tokens"
             method: POST
             user: "{{ guac_admin_user }}"
             password: "{{ guac_admin_password }}"
@@ -197,7 +197,7 @@
 
         - name: Check if connections for DSVM exist
           ansible.builtin.uri:
-            url: "{{ API_root }}/session/data/{{ data_source }}/connections/{{ item.identifier }}?token={{ token.json.authToken }}"
+            url: "{{ api_root }}/session/data/{{ data_source }}/connections/{{ item.identifier }}?token={{ token.json.authToken }}"
             method: GET
             status_code: [200, 404]
           loop: "{{ guac_connections }}"
@@ -205,7 +205,7 @@
 
         - name: Create connections for DSVM
           ansible.builtin.uri:
-            url: "{{ API_root }}/session/data/{{ data_source }}/connections?token={{ token.json.authToken }}"
+            url: "{{ api_root }}/session/data/{{ data_source }}/connections?token={{ token.json.authToken }}"
             method: POST
             body: "{{ item.item.params }}"
             body_format: json
@@ -214,7 +214,7 @@
 
         - name: Update RDP connection for DSVM
           ansible.builtin.uri:
-            url: "{{ API_root }}/session/data/{{ data_source }}/connections/{{ item.item.identifier }}?token={{ token.json.authToken }}"
+            url: "{{ api_root }}/session/data/{{ data_source }}/connections/{{ item.item.identifier }}?token={{ token.json.authToken }}"
             method: PUT
             body: "{{ item.item.params }}"
             body_format: json
@@ -224,7 +224,7 @@
       always:
         - name: Delete API token
           ansible.builtin.uri:
-            url: "{{ API_root }}/tokens/{{ token.json.authToken }}?token={{ token.json.authToken }}"
+            url: "{{ api_root }}/tokens/{{ token.json.authToken }}?token={{ token.json.authToken }}"
             method: DELETE
             status_code: 204
 
@@ -363,6 +363,9 @@
           notify: Restart xrdp
 
         - name: Write startwm.sh script
+          # xrdp runs this script after starting the display server. By default
+          # it starts a window manager using /etc/X11/xinitrc or ~/.xinitrc. We
+          # edit this script to prevent users overriding the XFCE desktop.
           become: yes
           ansible.builtin.copy:
             dest: /etc/xrdp/startwm.sh
@@ -435,6 +438,9 @@
           # colour devices. This causes an error message when logging in.
           become: yes
           ansible.builtin.copy:
+            owner: root
+            group: root
+            mode: 0400
             src: 99-allow-colord.pkla
             dest: /etc/polkit-1/localauthority/50-local.d/99-allow-colord.pkla
 
