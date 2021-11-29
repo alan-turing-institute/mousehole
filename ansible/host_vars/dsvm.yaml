@@ -73,6 +73,14 @@ apt_packages_browsers:
 
 apt_packages: "{{ apt_packages_development | union(apt_packages_shells) | union(apt_packages_editors) | union(apt_packages_databases) | union(apt_packages_latex) | union(apt_packages_office) | union(apt_packages_browsers) | union(apt_packages_extra) }}"
 
+apt_packages_xfce:
+  - xubuntu-desktop
+  - xubuntu-core
+
+apt_packages_xrdp:
+  - xrdp
+
+apt_packages_desktop: "{{ apt_packages_xfce | union(apt_packages_xrdp) }}"
 
 snap_packages_default:
   - name: codium
