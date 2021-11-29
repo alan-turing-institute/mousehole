@@ -348,7 +348,7 @@
         - name: Install xrdp
           become: yes
           ansible.builtin.apt:
-            name: xrdp
+            name: "{{ apt_packages_xrdp }}"
             state: present
 
         - name: Set xrdp encryption level to high
@@ -411,9 +411,7 @@
         - name: Install xfce desktop
           become: yes
           ansible.builtin.apt:
-            name:
-              - xubuntu-desktop
-              - xubuntu-core
+            name: "{{ apt_packages_xfce }}"
             state: present
           async: 600
           poll: 5
