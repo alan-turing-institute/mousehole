@@ -12,7 +12,7 @@
     name: oefenweb.rstudio
 
 - name: Install singularity
-  ansible.builtin.import_tasks: tasks/dsvm/install_singularity.yaml
+  ansible.builtin.import_tasks: install_singularity.yaml
 
 - name: Install snaps
   community.general.snap:
