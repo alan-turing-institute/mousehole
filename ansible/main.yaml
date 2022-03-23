@@ -130,96 +130,23 @@
       register: guacadmin_file
 
     - name: Set Guacamole admin password
-      # See https://github.com/ridvanaltun/guacamole-rest-api-documentation
-      # and https://github.com/apache/guacamole-manual/pull/123/files
-      block:
-        - name: Get API token
-          ansible.builtin.uri:
-            url: "{{ api_root }}/tokens"
-            method: POST
-            user: "{{ guac_admin_user }}"
-            password: guacadmin
-            force_basic_auth: yes
-            body_format: form-urlencoded
-          register: token
-
-        - name: Change guacadmin password
-          ansible.builtin.uri:
-            url: "{{ api_root }}/session/data/{{ data_source }}/users/{{ guac_admin_user }}/password?token={{ token.json.authToken }}"
-            method: PUT
-            body:
-              oldPassword: guacadmin
-              newPassword: "{{ guac_admin_password }}"
-            body_format: json
-            status_code: 204
-
-        - name: Create guacadmin file
-          ansible.builtin.file:
-            path: "{{ guacadmin_file_path }}"
-            state: touch
-            owner: "{{ ansible_user }}"
-            group: "{{ ansible_user }}"
-            mode: 0644
-            modification_time: preserve
-            access_time: preserve
-      always:
-        - name: Delete API token
-          ansible.builtin.uri:
-            url: "{{ api_root }}/tokens/{{ token.json.authToken }}?token={{ token.json.authToken }}"
-            method: DELETE
-            status_code: 204
+      scicore.guacamole.guacamole_user:
+        base_url: http://localhost/guacamole
+        auth_username: guacadmin
+        auth_password: guacadmin
+        username: guacadmin
+        password: "{{ guac_admin_password }}"
       when: not guacadmin_file.stat.exists
 
-    - name: Configure guacamole using API
-      # See https://github.com/ridvanaltun/guacamole-rest-api-documentation
-      # and https://github.com/apache/guacamole-manual/pull/123/files
-      block:
-        - name: Get API token
-          ansible.builtin.uri:
-            url: "{{ api_root }}/tokens"
-            method: POST
-            user: "{{ guac_admin_user }}"
-            password: "{{ guac_admin_password }}"
-            force_basic_auth: yes
-            body_format: form-urlencoded
-          register: token
-
-        - name: Check if connections for DSVM exist
-          ansible.builtin.uri:
-            url: "{{ api_root }}/session/data/{{ data_source }}/connections/{{ item.identifier }}?token={{ token.json.authToken }}"
-            method: GET
-            status_code: [200, 404]
-          loop: "{{ guac_connections }}"
-          register: dsvm_connections
-
-        - name: Create connections for DSVM
-          ansible.builtin.uri:
-            url: "{{ api_root }}/session/data/{{ data_source }}/connections?token={{ token.json.authToken }}"
-            method: POST
-            body: "{{ item.item.params }}"
-            body_format: json
-          when: item.status == 404
-          loop: "{{ dsvm_connections.results }}"
-
-        - name: Update RDP connection for DSVM
-          ansible.builtin.uri:
-            url: "{{ api_root }}/session/data/{{ data_source }}/connections/{{ item.item.identifier }}?token={{ token.json.authToken }}"
-            method: PUT
-            body: "{{ item.item.params }}"
-            body_format: json
-            status_code: 204
-          when: item.status == 200
-          loop: "{{ dsvm_connections.results }}"
-      always:
-        - name: Delete API token
-          ansible.builtin.uri:
-            url: "{{ api_root }}/tokens/{{ token.json.authToken }}?token={{ token.json.authToken }}"
-            method: DELETE
-            status_code: 204
-
-    - name: Install and enable Guacamole TOTP extension
-      ansible.builtin.import_tasks: enable_guacamole_totp.yaml
-
+    - name: Create guacadmin file
+      ansible.builtin.file:
+        path: "{{ guacadmin_file_path }}"
+        state: touch
+        owner: "{{ ansible_user }}"
+        group: "{{ ansible_user }}"
+        mode: 0644
+        modification_time: preserve
+        access_time: preserve
 
 - name: Configure DSVM
   hosts: dsvm
