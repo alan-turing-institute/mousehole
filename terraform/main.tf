@@ -23,6 +23,16 @@ locals {
         rdp = local.network_security_group_rules.rdp
       }
     }
+    ldap = {
+      name               = "ldap"
+      vm_size            = var.vm_size.ldap
+      admin_username     = "ldap_admin"
+      private_ip_address = "10.1.0.6"
+
+      nsg_rules = {
+        ssh = local.network_security_group_rules.ssh
+      }
+    }
   }
 }
 

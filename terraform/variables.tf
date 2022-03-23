@@ -20,6 +20,7 @@ variable "vm_size" {
   default = {
     guacamole = "Standard_D4s_v3"
     dsvm      = "Standard_D32s_v3"
+    ldap      = "Standard_D2s_v3"
   }
 }
 

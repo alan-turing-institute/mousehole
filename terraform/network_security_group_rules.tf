@@ -44,5 +44,16 @@ locals {
       source_address_prefix      = "VirtualNetwork"
       destination_address_prefix = "*"
     }
+    ldap = {
+      name                       = "LDAP"
+      priority                   = 1005
+      direction                  = "Inbound"
+      access                     = "Allow"
+      protocol                   = "Tcp"
+      source_port_range          = "*"
+      destination_port_range     = "389"
+      source_address_prefix      = "VirtualNetwork"
+      destination_address_prefix = "*"
+    }
   }
 }

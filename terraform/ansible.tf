@@ -15,6 +15,10 @@ resource "local_file" "ansible_inventory" {
           ansible_host: ${module.virtual_machines["dsvm"].public_ip_address.ip_address}
           ansible_user: ${local.virtual_machines.dsvm.admin_username}
           ansible_ssh_private_key_file: ${module.virtual_machines["dsvm"].admin_private_key_file.filename}
+        ldap:
+          ansible_host: ${module.virtual_machines["ldap"].public_ip_address.ip_address}
+          ansible_user: ${local.virtual_machines.ldap.admin_username}
+          ansible_ssh_private_key_file: ${module.virtual_machines["ldap"].admin_private_key_file.filename}
     DOC
 }
 
