@@ -122,8 +122,7 @@
               - compose_output.services.reverse_proxy.traefik.state.running
 
     - name: (Temporarily) disable TOTP to allowd Guacamole configuration through the API
-      import_role:
-        name: disable_guacamole_totp
+      ansible.builtin.import_tasks: tasks/disable_guacamole_totp.yaml
 
     - name: Check if password has been changed from default
       ansible.builtin.stat:
@@ -219,8 +218,7 @@
             status_code: 204
 
     - name: Install and enable Guacamole TOTP extension
-      import_role:
-        name: enable_guacamole_totp
+      ansible.builtin.import_tasks: enable_guacamole_totp.yaml
 
 
 - name: Configure DSVM
@@ -424,8 +422,7 @@
         name: oefenweb.rstudio
 
     - name: Install singularity
-      ansible.builtin.import_role:
-        name: singularity
+      ansible.builtin.import_tasks: tasks/install_singularity.yaml
 
     - name: Install snaps
       community.general.snap:

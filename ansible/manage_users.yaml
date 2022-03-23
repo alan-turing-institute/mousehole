@@ -40,8 +40,7 @@
 
   tasks:
     - name: (Temporarily) disable TOTP to allowd Guacamole configuration through the API
-      import_role:
-        name: disable_guacamole_totp
+      ansible.builtin.import_tasks: tasks/disable_guacamole_totp.yaml
 
     - name: Create users using Guacamole API
       block:
@@ -149,8 +148,7 @@
             status_code: 204
 
     - name: Install and enable Guacamole TOTP extension
-      import_role:
-        name: enable_guacamole_totp
+      ansible.builtin.import_tasks: enable_guacamole_totp.yaml
 
     - name: Write initial Guacamole passwords to file
       ansible.builtin.copy:
