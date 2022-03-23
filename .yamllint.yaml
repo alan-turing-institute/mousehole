@@ -2,7 +2,18 @@
 extends: default
 
 rules:
-  # Make long lines a warning rather than error
-  line-length:
-    max: 80
-    level: warning
+  braces:
+    max-spaces-inside: 1
+    level: error
+  brackets:
+    max-spaces-inside: 1
+    level: error
+  colons:
+    max-spaces-after: -1
+    level: error
+  commas:
+    max-spaces-after: -1
+    level: error
+  line-length: disable
+  truthy:
+    allowed-values: ['true', 'false', 'yes', 'no']
