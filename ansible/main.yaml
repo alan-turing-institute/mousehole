@@ -19,7 +19,7 @@
 
 - name: Basic hardening for all hosts
   hosts: all
-
+  become: yes
   tags: hardening
 
   collections:
@@ -30,20 +30,14 @@
 
   roles:
     - role: wait_for_cloud_init
-
     - role: apt_cache
-      become: yes
-
     - role: devsec.hardening.ssh_hardening
-      become: yes
-
     - role: oefenweb.fail2ban
-      become: yes
 
 
 - name: Configure Guacamole VM
   hosts: guacamole
-
+  become: yes
   tags: guacamole
 
   vars:
@@ -57,15 +51,9 @@
 
   roles:
     - role: wait_for_cloud_init
-
     - role: apt_cache
-      become: yes
-
     - role: geerlingguy.docker
-      become: yes
-
     - role: geerlingguy.pip
-      become: yes
 
   tasks:
     # Ensure ansible_user has docker-group privileges
@@ -80,6 +68,7 @@
     - name: Create database initialisation script
       block:
         - name: Get database initialisation script contents
+          become_user: "{{ ansible_user }}"
           community.docker.docker_container:
             name: guacamole
             image: "guacamole/guacamole:{{ guac_version }}"
@@ -117,6 +106,7 @@
             mode: 0644
 
         - name: Run docker services
+          become_user: "{{ ansible_user }}"
           community.docker.docker_compose:
             project_src: "{{ ansible_user_dir }}"
             project_name: guacamole
@@ -132,8 +122,7 @@
               - compose_output.services.reverse_proxy.traefik.state.running
 
     - name: (Temporarily) disable TOTP to allowd Guacamole configuration through the API
-      import_role:
-        name: disable_guacamole_totp
+      ansible.builtin.import_tasks: tasks/disable_guacamole_totp.yaml
 
     - name: Check if password has been changed from default
       ansible.builtin.stat:
@@ -229,13 +218,12 @@
             status_code: 204
 
     - name: Install and enable Guacamole TOTP extension
-      import_role:
-        name: enable_guacamole_totp
+      ansible.builtin.import_tasks: enable_guacamole_totp.yaml
 
 
 - name: Configure DSVM
   hosts: dsvm
-
+  become: yes
   tags: dsvm
 
   collections:
@@ -247,267 +235,34 @@
 
   roles:
     - role: wait_for_cloud_init
-
     - role: apt_cache
-      become: yes
 
   tasks:
-    - name: Create group for shared data
-      become: yes
-      ansible.builtin.group:
-        name: shared
-        system: yes
-        state: present
-
     - name: Configure shared data disk and directory
-      block:
-        - name: Partition disk
-          become: yes
-          community.general.parted:
-            device: /dev/disk/azure/scsi1/lun0
-            label: gpt
-            number: 1
-            state: present
-          register: data_disk
-
-        - name: Create ext4 file system
-          become: yes
-          community.general.filesystem:
-            device: "{{ data_disk.disk.dev }}1"
-            fstype: ext4
-
-        - name: Mount shared data partition
-          become: yes
-          ansible.posix.mount:
-            path: /shared
-            state: mounted
-            src: /dev/disk/azure/scsi1/lun0-part1
-            fstype: ext4
-            opts: defaults,nofail
-            passno: "2"
-
-        - name: Set shared directory permissions
-          become: yes
-          ansible.builtin.file:
-            path: /shared
-            state: directory
-            owner: root
-            group: shared
-            mode: u=rwx,g=rwx,o=,g+s
-
-        - name: Install ACL tools
-          become: yes
-          ansible.builtin.apt:
-            name: acl
-            state: present
-
-        # Note that execute permissions are needed so that users in the shared
-        # group may enter directories, create new files, and delete files
-        - name: Set group permissions for new files and directories
-          become: yes
-          ansible.posix.acl:
-            path: /shared
-            etype: group
-            default: yes
-            permissions: rwx
-            state: present
+      ansible.builtin.import_tasks: tasks/dsvm/shared_directory.yaml
 
     - name: Configure ingress and egress shares
-      block:
-        - name: Write share credentials to (unreadable) file
-          become: yes
-          ansible.builtin.copy:
-            dest: /root/share_credentials.txt
-            content: |
-              username={{ share_username }}
-              password={{ share_password }}
-            owner: root
-            group: root
-            mode: 0400
-
-        - name: Mount shares
-          become: yes
-          ansible.posix.mount:
-            state: mounted
-            path: "{{ item.path }}"
-            src: "{{ item.url }}"
-            fstype: cifs
-            opts: "_netdev,credentials=/root/share_credentials.txt,vers=3.0,file_mode={{ item.file_mode }},dir_mode={{ item.dir_mode }},serverino"
-          loop:
-            - path: /data
-              url: "{{ ingress_unc }}"
-              file_mode: "0744"
-              dir_mode: "0755"
-            - path: /output
-              url: "{{ egress_unc }}"
-              file_mode: "0777"
-              dir_mode: "0777"
+      ansible.builtin.import_tasks: tasks/dsvm/shares.yaml
 
     - name: Install and configure RDP
-      block:
-        - name: Install xrdp
-          become: yes
-          ansible.builtin.apt:
-            name: "{{ apt_packages_xrdp }}"
-            state: present
-
-        - name: Set xrdp encryption level to high
-          become: yes
-          ansible.builtin.lineinfile:
-            path: /etc/xrdp/xrdp.ini
-            state: present
-            regexp: '^(.*)encrypt_level=.*$'
-            line: '\1encrypt_level=high'
-            backrefs: yes
-            backup: yes
-          notify: Restart xrdp
-
-        - name: Write startwm.sh script
-          # xrdp runs this script after starting the display server. By default
-          # it starts a window manager using /etc/X11/xinitrc or ~/.xinitrc. We
-          # edit this script to prevent users overriding the XFCE desktop.
-          become: yes
-          ansible.builtin.copy:
-            dest: /etc/xrdp/startwm.sh
-            owner: root
-            group: root
-            mode: 0755
-            content: |
-              #!/bin/sh
-              if [ -r /etc/profile ]; then
-                  . /etc/profile
-              fi
-
-              if [ -r /etc/default/locale ]; then
-                  . /etc/default/locale
-                  export LANG LANGUAGE
-              fi
-              # Start xfce4
-              startxfce4
-            backup: yes
-          notify: Restart xrdp
-
-        - name: Ensure xrdp user is in the ssl-cert group
-          # This is required to let xrdp access
-          # `/etc/ssl/private/ssl-cert-snakeoil.key` which is symlinked to
-          # `/etc/xrdp/key.pem`
-          become: yes
-          ansible.builtin.user:
-            name: xrdp
-            groups: ssl-cert
-            append: yes
-          notify: Restart xrdp
-
-        - name: Start and enable xrdp service
-          become: yes
-          ansible.builtin.systemd:
-            name: xrdp
-            state: started
-            enabled: yes
-
+      ansible.builtin.import_tasks: tasks/dsvm/rdp.yaml
 
     - name: Install and configure desktop
-      block:
-        - name: Install xfce desktop
-          become: yes
-          ansible.builtin.apt:
-            name: "{{ apt_packages_xfce }}"
-            state: present
-          async: 600
-          poll: 5
+      ansible.builtin.import_tasks: tasks/dsvm/desktop.yaml
 
-        - name: Configure default terminal globally
-          become: yes
-          ansible.builtin.lineinfile:
-            path: /etc/xdg/xfce4/helpers.rc
-            regex: '^TerminalEmulator='
-            line: 'TerminalEmulator=xfce4-terminal'
+    - name: Install packages
+      ansible.builtin.import_tasks: tasks/dsvm/packages.yaml
 
-        - name: Disable light-locker
-          # light-locker starts with an error when lightdm has not run. As we
-          # connect with xrdp this is the case.
-          become: yes
-          ansible.builtin.lineinfile:
-            path: /etc/xdg/autostart/light-locker.desktop
-            line: 'Hidden=true'
-
-        - name: Allow all users to manage colour in polkit
-          # By default remote sessions are disallowed (by polkit) to manage
-          # colour devices. This causes an error message when logging in.
-          become: yes
-          ansible.builtin.copy:
-            owner: root
-            group: root
-            mode: 0400
-            src: 99-allow-colord.pkla
-            dest: /etc/polkit-1/localauthority/50-local.d/99-allow-colord.pkla
-
-    - name: Install apt packages
-      become: yes
-      ansible.builtin.apt:
-        name: "{{ apt_packages }}"
-        state: present
-      async: 1800
-      poll: 5
-
-    - name: Install R Studio
-      become: yes
-      ansible.builtin.import_role:
-        name: oefenweb.rstudio
-
-    - name: Install singularity
-      become: yes
-      ansible.builtin.import_role:
-        name: singularity
-
-    - name: Install snaps
-      become: yes
-      community.general.snap:
-        name: "{{ item.name }}"
-        classic: "{{ item.classic | default(omit) }}"
-        state: present
-      loop: "{{ snap_packages }}"
-      async: 1800
-      poll: 1
 
     - name: Set default Julia depot and pip cache directories
-      become: yes
       ansible.builtin.blockinfile:
         path: /etc/bash.bashrc
         block: |
           export JULIA_DEPOT_PATH="/shared/.julia:$JULIA_DEPOT_PATH"
           export PIP_CACHE_DIR=/shared/.pip_cache
 
-    - name: Create desktop directory in /etc/skel
-      become: yes
-      ansible.builtin.file:
-        path: /etc/skel/Desktop
-        state: directory
-        mode: 0755
-
-    - name: Create default symbolic links to data directories in users' homes and desktops
-      become: yes
-      ansible.builtin.file:
-        path: "/etc/skel/{{ item.path }}"
-        src: "{{ item.src }}"
-        state: link
-      loop:
-        - path: shared
-          src: /shared
-        - path: Desktop/shared
-          src: /shared
-        - path: data
-          src: /data
-        - path: Desktop/data
-          src: /data
-        - path: output
-          src: /output
-        - path: Desktop/output
-          src: /output
-
   handlers:
     - name: Restart xrdp
-      become: yes
       ansible.builtin.systemd:
         name: xrdp
         state: restarted

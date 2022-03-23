@@ -1,0 +1,24 @@
+---
+
+- name: Install apt packages
+  ansible.builtin.apt:
+    name: "{{ apt_packages }}"
+    state: present
+  async: 1800
+  poll: 5
+
+- name: Install R Studio
+  ansible.builtin.import_role:
+    name: oefenweb.rstudio
+
+- name: Install singularity
+  ansible.builtin.import_tasks: install_singularity.yaml
+
+- name: Install snaps
+  community.general.snap:
+    name: "{{ item.name }}"
+    classic: "{{ item.classic | default(omit) }}"
+    state: present
+  loop: "{{ snap_packages }}"
+  async: 1800
+  poll: 1
