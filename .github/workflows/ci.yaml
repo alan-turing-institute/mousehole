@@ -22,7 +22,7 @@ jobs:
         run: pip install "ansible-lint[community]"
 
       - name: Lint Ansible
-        run: ansible-lint
+        run: ansible-lint -x yaml
 
   yaml_lint:
     name: "Lint YAML"
