@@ -8,10 +8,6 @@ jobs:
     name: "Lint Ansible"
     runs-on: ubuntu-latest
 
-    defaults:
-      run:
-        working-directory: ./ansible
-
     steps:
       - uses: actions/checkout@v2
 
@@ -22,7 +18,7 @@ jobs:
         run: pip install "ansible-lint[community]"
 
       - name: Lint Ansible
-        run: ansible-lint -x yaml
+        run: ansible-lint
 
   yaml_lint:
     name: "Lint YAML"

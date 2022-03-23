@@ -35,6 +35,9 @@
         url: "https://github.com/hpcng/singularity/releases/download/v{{ singularity_version }}/singularity-{{ singularity_version }}.tar.gz"
         dest: "{{ ansible_user_dir }}"
         checksum: "sha256:https://github.com/hpcng/singularity/releases/download/v{{ singularity_version }}/sha256sums"
+        owner: "{{ ansible_user }}"
+        group: "{{ ansible_user }}"
+        mode: 0644
       register: singularity_archive
 
     - name: Unarchive singularity source
