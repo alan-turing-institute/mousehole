@@ -1,0 +1,56 @@
+---
+
+- name: Install xfce desktop
+  ansible.builtin.apt:
+    name: "{{ apt_packages_xfce }}"
+    state: present
+  async: 600
+  poll: 5
+
+- name: Configure default terminal globally
+  ansible.builtin.lineinfile:
+    path: /etc/xdg/xfce4/helpers.rc
+    regex: '^TerminalEmulator='
+    line: 'TerminalEmulator=xfce4-terminal'
+
+- name: Disable light-locker
+  # light-locker starts with an error when lightdm has not run. As we
+  # connect with xrdp this is the case.
+  ansible.builtin.lineinfile:
+    path: /etc/xdg/autostart/light-locker.desktop
+    line: 'Hidden=true'
+
+- name: Allow all users to manage colour in polkit
+  # By default remote sessions are disallowed (by polkit) to manage
+  # colour devices. This causes an error message when logging in.
+  ansible.builtin.copy:
+    owner: root
+    group: root
+    mode: 0400
+    src: 99-allow-colord.pkla
+    dest: /etc/polkit-1/localauthority/50-local.d/99-allow-colord.pkla
+
+- name: Create desktop directory in /etc/skel
+  ansible.builtin.file:
+    path: /etc/skel/Desktop
+    state: directory
+    mode: 0755
+
+- name: Create default symbolic links to data directories in users' homes and desktops
+  ansible.builtin.file:
+    path: "/etc/skel/{{ item.path }}"
+    src: "{{ item.src }}"
+    state: link
+  loop:
+    - path: shared
+      src: /shared
+    - path: Desktop/shared
+      src: /shared
+    - path: data
+      src: /data
+    - path: Desktop/data
+      src: /data
+    - path: output
+      src: /output
+    - path: Desktop/output
+      src: /output

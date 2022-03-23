@@ -1,0 +1,52 @@
+---
+
+- name: Create group for shared data
+  ansible.builtin.group:
+    name: shared
+    system: yes
+    state: present
+
+- name: Partition disk
+  community.general.parted:
+    device: /dev/disk/azure/scsi1/lun0
+    label: gpt
+    number: 1
+    state: present
+  register: data_disk
+
+- name: Create ext4 file system
+  community.general.filesystem:
+    device: "{{ data_disk.disk.dev }}1"
+    fstype: ext4
+
+- name: Mount shared data partition
+  ansible.posix.mount:
+    path: /shared
+    state: mounted
+    src: /dev/disk/azure/scsi1/lun0-part1
+    fstype: ext4
+    opts: defaults,nofail
+    passno: "2"
+
+- name: Set shared directory permissions
+  ansible.builtin.file:
+    path: /shared
+    state: directory
+    owner: root
+    group: shared
+    mode: u=rwx,g=rwx,o=,g+s
+
+- name: Install ACL tools
+  ansible.builtin.apt:
+    name: acl
+    state: present
+
+# Note that execute permissions are needed so that users in the shared
+# group may enter directories, create new files, and delete files
+- name: Set group permissions for new files and directories
+  ansible.posix.acl:
+    path: /shared
+    etype: group
+    default: yes
+    permissions: rwx
+    state: present
