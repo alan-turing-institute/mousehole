@@ -23,7 +23,7 @@ postgres_version: 13-alpine  # version > 13 appear not to work
 init_db_file: "{{ ansible_user_dir }}/initdb.sql"
 postgres_volume: "{{ ansible_user_dir }}/postgres"
 traefik_dynamic_config: "{{ ansible_user_dir }}/dynamic_conf.yml"
-traefik_version: "v2.4"
+traefik_version: v2.7
 traefik_acme_volume: "{{ ansible_user_dir }}/acme"
 
 # Guacamole webapp variables
