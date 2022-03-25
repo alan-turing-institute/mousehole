@@ -25,12 +25,17 @@ services:
     ports:
       - 127.0.0.1:8080:8080
     environment:
-      - GUACAMOLE_HOME={{ guacamole_home_container }}
-      - GUACD_HOSTNAME=guacd
-      - POSTGRES_HOSTNAME=database
-      - POSTGRES_DATABASE={{ guac_db_name }}
-      - POSTGRES_USER={{ guac_db_user }}
-      - POSTGRES_PASSWORD={{ guac_db_password }}
+      GUACAMOLE_HOME: {{ guacamole_home_container }}
+      GUACD_HOSTNAME: guacd
+      POSTGRES_HOSTNAME: database
+      POSTGRES_DATABASE: {{ guac_db_name }}
+      POSTGRES_USER: {{ guac_db_user }}
+      POSTGRES_PASSWORD: {{ guac_db_password }}
+      LDAP_HOSTNAME: ldap
+      LDAP_PORT: 1389
+      LDAP_SEARCH_BIND_DN: cn=ldapadmin,dc=mousehole,dc=com
+      LDAP_SEARCH_BIND_PASSWORD: {{ ldap_admin_password }}
+      LDAP_USER_BASE_DN: ou=users,dc=mousehole,dc=com
     volumes:
       - {{ guacamole_home_host }}:{{ guacamole_home_container }}
     restart: always
@@ -45,6 +50,36 @@ services:
       - "traefik.http.routers.guacamole.middleWares=add-guacamole,hsts-headers@file"
       # Middlewares
       - "traefik.http.middleWares.add-guacamole.addPrefix.prefix=/guacamole"
+  ldap:
+    image: bitnami/openldap:{{ openldap_version }}
+    container_name: ldap
+    environment:
+      LDAP_ROOT: dc=mousehole,dc=com
+      LDAP_ADMIN_USERNAME: ldapadmin
+      LDAP_ADMIN_PASSWORD: {{ ldap_admin_password }}
+      LDAP_CONFIG_ADMIN_USERNAME: ldapconfigadmin
+      LDAP_CONFIG_ADMIN_PASSWORD: {{ ldap_config_admin_password }}
+    ports:
+      - 1389:1389
+    volumes:
+      - {{ openldap_volume }}:/bitnami/openldap
+      - {{ schema_file }}:/schema/custom.ldif:ro
+    restart: always
+  # ssp:
+  #   image: ltbproject/self-service-password:{{ self_service_password_version }}
+  #   container_name: self_service_password
+  #   volumes:
+  #     - ./ssp.conf.php:/var/www/conf/config.inc.local.php:ro
+  #   restart: always
+  #   labels:
+  #     - "traefik.enable=true"
+  #     # Routers
+  #     - "traefik.http.routers.ssp.rule=Host(`{{ ssp_domain }}`)"
+  #     - "traefik.http.routers.ssp.tls=true"
+# {% if lets_encrypt %}
+  #     - "traefik.http.routers.ssp.tls.certResolver=le"
+# {% endif %}
+  #     - "traefik.http.routers.ssp.middleWares=hsts-headers@file"
   reverse_proxy:
     image: traefik:{{ traefik_version }}
     container_name: traefik

@@ -10,6 +10,12 @@ guac_admin_password:
 # Guacamole database password
 guac_db_password:
 
+# LDAP admin (ldapadmin) password
+ldap_admin_password:
+
+# LDAP config admin (ldapconfigadmin) password
+ldap_config_admin_password:
+
 # Additional apt packages
 apt_packages_extra: []
 
