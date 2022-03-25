@@ -29,6 +29,7 @@ resource "local_file" "terraform_vars" {
     guacamole_domain: ${azurerm_dns_a_record.login.fqdn}
     guacamole_admin_user: ${local.virtual_machines.guacamole.admin_username}
     guacamole_private_ip: ${local.virtual_machines.guacamole.private_ip_address}
+    ssp_domain: ${azurerm_dns_a_record.ssp.fqdn}
     dsvm_admin_user: ${local.virtual_machines.dsvm.admin_username}
     dsvm_private_ip: ${local.virtual_machines.dsvm.private_ip_address}
     ingress_unc: ${replace(azurerm_storage_share.this["ingress"].url, "https://", "//")}
