@@ -19,7 +19,7 @@ guacamole_extensions_dir: "{{ guacamole_home_host }}/extensions"
 guac_db_name: guacamole
 guac_db_user: guacamole
 guac_version: "1.4.0"
-postgres_version: "13.3"
+postgres_version: 13-alpine  # version > 13 appear not to work
 init_db_file: "{{ ansible_user_dir }}/initdb.sql"
 postgres_volume: "{{ ansible_user_dir }}/postgres"
 traefik_dynamic_config: "{{ ansible_user_dir }}/dynamic_conf.yml"
