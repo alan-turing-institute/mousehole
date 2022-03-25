@@ -11,6 +11,10 @@ locals {
   }
 }
 
+data "external" "own_ip" {
+  program = ["bash", "-c", "curl -s 'https://ipinfo.io/json'"]
+}
+
 resource "random_string" "storage_suffix" {
   length  = 24
   special = false
@@ -36,6 +40,7 @@ resource "azurerm_storage_account" "this" {
 
   network_rules {
     default_action             = "Deny"
+    ip_rules = [data.external.own_ip.result.ip]
     virtual_network_subnet_ids = [azurerm_subnet.this.id]
   }
 }
