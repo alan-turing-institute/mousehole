@@ -12,6 +12,18 @@
     attributes:
       cn: Desktop
       guacConfigProtocol: rdp
+      member: ''
+
+- name: Configure RDP connection
+  community.general.ldap_attrs:
+    server_uri: "{{ ldap_uri }}"
+    bind_dn: "{{ ldap_admin_dn }}"
+    bind_pw: "{{ ldap_admin_password }}"
+    dn: "cn=RDP Connection,ou=groups,{{ ldap_base_dn }}"
+    state: exact
+    attributes:
+      cn: Desktop
+      guacConfigProtocol: rdp
       guacConfigParameter:
         - hostname="{{ dsvm_private_ip }}"
         - port=3389
@@ -19,7 +31,6 @@
         - ignore-cert=true
         - server-layout=en-gb-qwerty
         - timezone=Etc/GMT+0
-      member: ''
 
 - name: Create SSH connection
   community.general.ldap_entry:
@@ -33,6 +44,17 @@
     attributes:
       cn: Command Line
       guacConfigProtocol: ssh
+      member: ''
+
+- name: Configure SSH connection
+  community.general.ldap_entry:
+    server_uri: "{{ ldap_uri }}"
+    bind_dn: "{{ ldap_admin_dn }}"
+    bind_pw: "{{ ldap_admin_password }}"
+    dn: "cn=SSH Connection,ou=groups,{{ ldap_base_dn }}"
+    state: exact
+    attributes:
+      cn: Command Line
+      guacConfigProtocol: ssh
       guacConfigParameter:
         - hostname="{{ dsvm_private_ip }}"
-      member: ''
