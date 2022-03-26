@@ -40,6 +40,9 @@
   become: yes
   tags: guacamole
 
+  collections:
+    - scicore.guacamole
+
   vars:
     api_root: http://localhost:8080/guacamole/api
     data_source: postgresql
@@ -180,28 +183,14 @@
       register: guacadmin_file
 
     - name: Set Guacamole admin password
-      # See https://github.com/ridvanaltun/guacamole-rest-api-documentation
-      # and https://github.com/apache/guacamole-manual/pull/123/files
       block:
-        - name: Get API token
-          ansible.builtin.uri:
-            url: "{{ api_root }}/tokens"
-            method: POST
-            user: "{{ guac_admin_user }}"
-            password: guacadmin
-            force_basic_auth: yes
-            body_format: form-urlencoded
-          register: token
-
         - name: Change guacadmin password
-          ansible.builtin.uri:
-            url: "{{ api_root }}/session/data/{{ data_source }}/users/{{ guac_admin_user }}/password?token={{ token.json.authToken }}"
-            method: PUT
-            body:
-              oldPassword: guacadmin
-              newPassword: "{{ guac_admin_password }}"
-            body_format: json
-            status_code: 204
+          scicore.guacamole.guacamole_user:
+            base_url: "{{ guacamole_root }}"
+            auth_user: guacadmin
+            auth_password: guacadmin
+            username: guacadmin
+            password: "{{ guac_admin_password }}"
 
         - name: Create guacadmin file
           ansible.builtin.file:
@@ -212,12 +201,6 @@
             mode: 0644
             modification_time: preserve
             access_time: preserve
-      always:
-        - name: Delete API token
-          ansible.builtin.uri:
-            url: "{{ api_root }}/tokens/{{ token.json.authToken }}?token={{ token.json.authToken }}"
-            method: DELETE
-            status_code: 204
       when: not guacadmin_file.stat.exists
 
     - name: Configure guacamole using API

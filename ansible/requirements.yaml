@@ -7,5 +7,6 @@ roles:
   - name: oefenweb.rstudio
 
 collections:
-  - name: devsec.hardening
   - name: community.general
+  - name: devsec.hardening
+  - name: scicore.guacamole

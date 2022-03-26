@@ -35,7 +35,8 @@ traefik_acme_volume: "{{ ansible_user_dir }}/acme"
 guac_admin_user: guacadmin
 
 # Guacamole API variables
-api_root: http://localhost:8080/guacamole/api
+guacamole_root: http://localhost:8080/guacamole
+api_root: "{{ guacamole_root }}/api"
 data_source: postgresql
 
 # Guacamole connections
