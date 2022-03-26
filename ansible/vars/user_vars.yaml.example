@@ -9,19 +9,17 @@ email:
   username: admin@example.com
   password: password
 
-# Force writing initial passwords to file
-force_write_initial_passwords: no
-
-# Local users
+# Users that should be present
 # users:
 #   - username: example
-#     name: Example User
+#     full_name: Example User
+#     surname: User
+#     number: 100x
 #     email: user@example.com
 users: []
 
-# Local users to disable/remove
+# Users remove
 # Set remove to yes to delete user data and home directory
 # users_deleted:
 #   - username: example
-#     remove: no
 users_deleted: []

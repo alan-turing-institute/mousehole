@@ -9,6 +9,7 @@ ssh_client_password_login: yes
 pip_install_packages:
   - docker
   - docker-compose
+  - python-ldap
 
 # Docker users
 docker_users:
