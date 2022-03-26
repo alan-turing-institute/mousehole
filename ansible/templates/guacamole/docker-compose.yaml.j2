@@ -36,6 +36,7 @@ services:
       LDAP_SEARCH_BIND_DN: cn=ldapadmin,dc=mousehole,dc=com
       LDAP_SEARCH_BIND_PASSWORD: {{ ldap_admin_password }}
       LDAP_USER_BASE_DN: ou=users,dc=mousehole,dc=com
+      LDAP_CONFIG_BASE_DN: ou=groups,dc=mousehole,dc=com
     volumes:
       - {{ guacamole_home_host }}:{{ guacamole_home_container }}
     restart: always
