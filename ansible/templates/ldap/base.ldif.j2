@@ -9,15 +9,3 @@ o: mousehole
 dn: ou=users,dc=mousehole,dc=com
 objectClass: organizationalUnit
 ou: users
-
-dn: uid=guacadmin,ou=users,dc=mousehole,dc=com
-objectClass: inetOrgPerson
-objectClass: posixAccount
-objectClass: shadowAccount
-cn: Guac Admin
-gidNumber: 1000
-homeDirectory: /home/guacadmin
-sn: Admin
-uid: guacadmin
-uidNumber: 1000
-userPassword: {{ guacadmin_password }}
