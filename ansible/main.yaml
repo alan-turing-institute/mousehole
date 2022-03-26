@@ -41,6 +41,7 @@
   tags: guacamole
 
   collections:
+    - community.general
     - scicore.guacamole
 
   vars:
@@ -171,6 +172,9 @@
           - compose_output.services.guacamole.guacamole.state.running
           - compose_output.services.ldap.ldap.state.running
           - compose_output.services.reverse_proxy.traefik.state.running
+
+    - name: Create connections
+      ansible.builtin.import_tasks: ansible/tasks/guacamole/connections.yaml
 
     - name: (Temporarily) disable TOTP to allowd Guacamole configuration through the API
       ansible.builtin.import_tasks: tasks/disable_guacamole_totp.yaml

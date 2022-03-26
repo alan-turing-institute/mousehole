@@ -32,10 +32,6 @@
 - name: Manage LDAP users
   hosts: guacamole
 
-  vars:
-    ldap_uri: ldap://localhost:1389
-    bind_dn: cn=ldapadmin,dc=mousehole,dc=com
-
   vars_files:
     - vars/ansible_vars.yaml
     - vars/user_vars.yaml
@@ -45,9 +41,9 @@
       # Will not overwrite an existing user entry
       community.general.ldap_entry:
         server_uri: "{{ ldap_uri }}"
-        bind_dn: "{{ bind_dn }}"
+        bind_dn: "{{ ldap_admin_dn }}"
         bind_pw: "{{ ldap_admin_password }}"
-        dn: "uid={{ item.username }},ou=users,dc=mousehole,dc=com"
+        dn: "uid={{ item.username }},ou=users,{{ ldap_base_dn }}"
         objectClass:
           - inetOrgPerson
           - posixAccount
@@ -61,13 +57,13 @@
           uid: "{{ item.username }}"
           uidNumber: "{{ item.number }}"
           # Generate a random, unstored password, salted and SHA1 hashed
-          userPassword: "{{ lookup('password', '/dev/null' | password_hash('ldap_salted_sha1') }}"
+          userPassword: "{{ lookup('password', '/dev/null') | password_hash('ldap_salted_sha1') }}"
       loop: users
 
     - name: Remove users
       community.general.ldap_entry:
         server_uri: "{{ ldap_uri }}"
-        bind_dn: "{{ bind_dn }}"
+        bind_dn: "{{ ldap_admin_dn }}"
         bind_pw: "{{ ldap_admin_password }}"
-        dn: "uid={{ item.username }},ou=users,dc=mousehole,dc=com"
+        dn: "uid={{ item.username }},ou=users,{{ ldap_base_dn }}"
         state: absent

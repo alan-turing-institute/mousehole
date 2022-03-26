@@ -33,10 +33,10 @@ services:
       POSTGRES_PASSWORD: {{ guac_db_password }}
       LDAP_HOSTNAME: ldap
       LDAP_PORT: 1389
-      LDAP_SEARCH_BIND_DN: cn=ldapadmin,dc=mousehole,dc=com
+      LDAP_SEARCH_BIND_DN: {{ ldap_admin_dn }}
       LDAP_SEARCH_BIND_PASSWORD: {{ ldap_admin_password }}
-      LDAP_USER_BASE_DN: ou=users,dc=mousehole,dc=com
-      LDAP_CONFIG_BASE_DN: ou=groups,dc=mousehole,dc=com
+      LDAP_USER_BASE_DN: {{ ldap_user_base_dn }}
+      LDAP_CONFIG_BASE_DN: {{ ldap_config_base_dn }}
     volumes:
       - {{ guacamole_home_host }}:{{ guacamole_home_container }}
     restart: always
@@ -55,7 +55,7 @@ services:
     image: bitnami/openldap:{{ openldap_version }}
     container_name: ldap
     environment:
-      LDAP_ROOT: dc=mousehole,dc=com
+      LDAP_ROOT: {{ ldap_base_dn }}
       LDAP_ADMIN_USERNAME: ldapadmin
       LDAP_ADMIN_PASSWORD: {{ ldap_admin_password | password_hash('ldap_salted_sha1') }}
       LDAP_CONFIG_ADMIN_USERNAME: ldapconfigadmin

@@ -1,15 +1,15 @@
 version: 1
 
-dn: dc=mousehole,dc=com
+dn: {{ ldap_base_dn }}
 objectClass: dcObject
 objectClass: organization
 dc: mousehole
 o: mousehole
 
-dn: ou=users,dc=mousehole,dc=com
+dn: {{ ldap_user_base_dn }}
 objectClass: organizationalUnit
 ou: users
 
-dn: ou=groups,dc=mousehole,dc=com
+dn: {{ ldap_config_base_dn }}
 objectClass: organizationalUnit
 ou: groups

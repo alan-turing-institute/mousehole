@@ -37,6 +37,13 @@ traefik_acme_volume: "{{ ansible_user_dir }}/acme"
 # Guacamole route
 guacamole_root: http://localhost:8080/guacamole
 
+# LDAP parameters
+ldap_uri: ldap://localhost:1389
+ldap_base_dn: dc=mousehole,dc=com
+ldap_admin_dn: "cn=ldapadmin,{{ ldap_base_dn }}"
+ldap_user_base_dn: "ou=users,{{ ldap_base_dn }}"
+ldap_config_base_dn: "ou=groups,{{ ldap_base_dn }}"
+
 # Guacamole connections
 guac_connections:
   - identifier: 1
