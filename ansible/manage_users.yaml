@@ -7,6 +7,9 @@
     - vars/ansible_vars.yaml
     - vars/user_vars.yaml
 
+  vars:
+    user_dns: []
+
   tasks:
     - name: Check all required user variables are defined
       ansible.builtin.assert:
@@ -59,6 +62,21 @@
           # Generate a random, unstored password, salted and SHA1 hashed
           userPassword: "{{ lookup('password', '/dev/null') | password_hash('ldap_salted_sha1') }}"
       loop: users
+
+    - name: Build list of use dns
+      ansible.builtin.set_fact:
+        user_dns: "{{ user_dns }} + ['uid={{ item.username }},ou=users,dc=mousehole,dc=com']"
+      loop: "{{ users }}"
+
+    - name: Add users to connections
+      community.general.ldap_attrs:
+        server_uri: "{{ ldap_uri }}"
+        bind_dn: "{{ ldap_admin_dn }}"
+        bind_pw: "{{ ldap_admin_password }}"
+        dn: cn=Dummy Connection,ou=groups,dc=mousehole,dc=com
+        state: present
+        attributes:
+          member: "{{ user_dns }}"
 
     - name: Remove users
       community.general.ldap_entry:
