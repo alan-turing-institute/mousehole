@@ -9,6 +9,7 @@ Before you start, you will need to install some dependencies,
 - [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli)
 - [Terraform](https://learn.hashicorp.com/tutorials/terraform/install-cli)
 - [Ansible](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html)
+- [Passlib](https://pypi.org/project/passlib/)
 
 You will also need,
 

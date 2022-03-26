@@ -56,9 +56,9 @@ services:
     environment:
       LDAP_ROOT: dc=mousehole,dc=com
       LDAP_ADMIN_USERNAME: ldapadmin
-      LDAP_ADMIN_PASSWORD: {{ ldap_admin_password }}
+      LDAP_ADMIN_PASSWORD: {{ ldap_admin_password | password_hash('ldap_salted_sha1') }}
       LDAP_CONFIG_ADMIN_USERNAME: ldapconfigadmin
-      LDAP_CONFIG_ADMIN_PASSWORD: {{ ldap_config_admin_password }}
+      LDAP_CONFIG_ADMIN_PASSWORD: {{ ldap_config_admin_password | password_hash('ldap_salted_sha1') }}
     ports:
       - 1389:1389
     volumes:
