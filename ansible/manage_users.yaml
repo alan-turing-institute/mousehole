@@ -51,7 +51,7 @@
         objectClass:
           - inetOrgPerson
           - posixAccount
-          - ShadowAccount
+          - shadowAccount
         attributes:
           cn: "{{ item.full_name }}"
           gidNumber: "{{ item.number }}"
