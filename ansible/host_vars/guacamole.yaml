@@ -1,6 +1,8 @@
 ---
 
 # SSH client settings
+# Allow ssh _client_ to use password login. This is necessary for password
+# login to from a Guacamole SSH connection.
 ssh_client_password_login: yes
 
 # Pip packages
@@ -31,13 +33,8 @@ traefik_dynamic_config: "{{ ansible_user_dir }}/dynamic_conf.yml"
 traefik_version: v2.7
 traefik_acme_volume: "{{ ansible_user_dir }}/acme"
 
-# Guacamole webapp variables
-guac_admin_user: guacadmin
-
-# Guacamole API variables
+# Guacamole route
 guacamole_root: http://localhost:8080/guacamole
-api_root: "{{ guacamole_root }}/api"
-data_source: postgresql
 
 # Guacamole connections
 guac_connections:
