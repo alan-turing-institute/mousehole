@@ -44,9 +44,6 @@
     - community.general
     - scicore.guacamole
 
-  vars:
-    guacadmin_file_path: "{{ ansible_user_dir }}/guacadmin"
-
   vars_files:
     - vars/ansible_vars.yaml
     - vars/terraform_vars.yaml
@@ -61,6 +58,15 @@
     # Ensure ansible_user has docker-group privileges
     - name: Reset connection so that group changes take effect
       meta: reset_connection
+
+    - name: Register guacamole admin user
+      ansible.builtin.user:
+        name: "{{ ansible_user }}"
+      register: user
+
+    - name: Get guacamole admin user home directory
+      ansible.builtin.set_fact:
+        home_dir: "{{ user.home }}"
 
     - name: Install python3-ldap module
       ansible.builtin.apt:
@@ -156,7 +162,7 @@
     - name: Template docker-compose file
       ansible.builtin.template:
         src: guacamole/docker-compose.yaml.j2
-        dest: "{{ ansible_user_dir }}/docker-compose.yaml"
+        dest: "{{ home_dir }}/docker-compose.yaml"
         owner: "{{ ansible_user }}"
         group: "{{ ansible_user }}"
         mode: 0644
@@ -164,7 +170,7 @@
     - name: Run docker services
       become_user: "{{ ansible_user }}"
       community.docker.docker_compose:
-        project_src: "{{ ansible_user_dir }}"
+        project_src: "{{ home_dir }}"
         project_name: guacamole
         pull: yes
       register: compose_output
@@ -186,7 +192,7 @@
 
     - name: Check if password has been changed from default
       ansible.builtin.stat:
-        path: "{{ guacadmin_file_path }}"
+        path: "{{ home_dir }}/guacadmin"
       register: guacadmin_file
 
     - name: Set Guacamole admin password
@@ -201,7 +207,7 @@
 
         - name: Create guacadmin file
           ansible.builtin.file:
-            path: "{{ guacadmin_file_path }}"
+            path: "{{ guacadmin_file.stat.path }}"
             state: touch
             owner: "{{ ansible_user }}"
             group: "{{ ansible_user }}"

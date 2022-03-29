@@ -16,22 +16,22 @@ docker_users:
 
 # Docker compose variables
 guacamole_home_container: /guacamole_home
-guacamole_home_host: "{{ ansible_user_dir }}/guacamole_home"
+guacamole_home_host: "{{ home_dir }}/guacamole_home"
 guacamole_extensions_dir: "{{ guacamole_home_host }}/extensions"
 guac_db_name: guacamole
 guac_db_user: guacamole
 guac_version: "1.4.0"
 postgres_version: 13-alpine  # version > 13 appear not to work
-init_db_file_path: "{{ ansible_user_dir }}/initdb.sql"
-postgres_volume: "{{ ansible_user_dir }}/postgres"
+init_db_file_path: "{{ home_dir }}/initdb.sql"
+postgres_volume: "{{ home_dir }}/postgres"
 openldap_version: "2.5"
-openldap_volume: "{{ ansible_user_dir }}/openldap"
-schema_directory: "{{ ansible_user_dir }}/ldifs"
+openldap_volume: "{{ home_dir }}/openldap"
+schema_directory: "{{ home_dir }}/ldifs"
 guac_schema_file_path: "{{ schema_directory }}/guacConfigGroup.lidf"
 self_service_password_version: "1.4.3"
-traefik_dynamic_config: "{{ ansible_user_dir }}/dynamic_conf.yml"
+traefik_dynamic_config: "{{ home_dir }}/dynamic_conf.yml"
 traefik_version: v2.7
-traefik_acme_volume: "{{ ansible_user_dir }}/acme"
+traefik_acme_volume: "{{ home_dir }}/acme"
 
 # Guacamole route
 guacamole_root: http://localhost:8080/guacamole

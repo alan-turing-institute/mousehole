@@ -3,7 +3,7 @@
 - name: Stop Traefik to prevent access from the internet
   become_user: "{{ ansible_user }}"
   community.docker.docker_compose:
-    project_src: "{{ ansible_user_dir }}"
+    project_src: "{{ home_dir }}"
     project_name: guacamole
     services: reverse_proxy
     stopped: yes
@@ -16,7 +16,7 @@
 - name: Restart Guacamole
   become: yes
   community.docker.docker_compose:
-    project_src: "{{ ansible_user_dir }}"
+    project_src: "{{ home_dir }}"
     project_name: guacamole
     services: guacamole
     restarted: yes
