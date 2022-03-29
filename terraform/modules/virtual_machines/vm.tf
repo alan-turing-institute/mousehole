@@ -5,7 +5,7 @@ resource "azurerm_linux_virtual_machine" "this" {
   resource_group_name   = var.resource_group_name
   network_interface_ids = [azurerm_network_interface.this.id]
   size                  = var.vm_size
-  computer_name         = "guacamole"
+  computer_name         = var.name
   admin_username        = var.admin_username
 
   disable_password_authentication = true
