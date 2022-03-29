@@ -205,14 +205,14 @@
         - name: Change guacadmin password
           scicore.guacamole.guacamole_user:
             base_url: "{{ guacamole_root }}"
-            auth_user: guacadmin
+            auth_username: guacadmin
             auth_password: guacadmin
             username: guacadmin
             password: "{{ guac_admin_password }}"
 
         - name: Create guacadmin file
           ansible.builtin.file:
-            path: "{{ guacadmin_file.stat.path }}"
+            path: "{{ home_dir }}/guacadmin"
             state: touch
             owner: "{{ ansible_user }}"
             group: "{{ ansible_user }}"
