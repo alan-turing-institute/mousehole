@@ -184,6 +184,11 @@
           - compose_output.services.ldap.ldap.state.running
           - compose_output.services.reverse_proxy.traefik.state.running
 
+    - name: Wait for docker services to be running
+      ansible.builtin.wait_for:
+        timeout: 20
+      when: compose_output.changed
+
     - name: Create connections
       ansible.builtin.import_tasks: tasks/guacamole/connections.yaml
 
