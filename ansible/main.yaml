@@ -87,7 +87,7 @@
 
         - name: Write database initialisation script
           ansible.builtin.copy:
-            dest: "{{ init_db_file }}"
+            dest: "{{ init_db_file_path }}"
             content: "{{ init_script.container.Output }}"
             owner: "{{ ansible_user }}"
             group: "{{ ansible_user }}"

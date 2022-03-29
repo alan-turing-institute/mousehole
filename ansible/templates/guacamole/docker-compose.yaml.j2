@@ -13,7 +13,7 @@ services:
       - POSTGRES_PASSWORD={{ guac_db_password }}
     volumes:
       - {{ postgres_volume }}:/var/lib/postgresql/data
-      - {{ init_db_file }}:/docker-entrypoint-initdb.d/init.sql
+      - {{ init_db_file_path }}:/docker-entrypoint-initdb.d/init.sql
     restart: always
   guacd:
     image: guacamole/guacd:{{ guac_version }}
