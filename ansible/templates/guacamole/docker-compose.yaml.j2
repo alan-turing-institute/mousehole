@@ -57,9 +57,9 @@ services:
     environment:
       LDAP_ROOT: {{ ldap_base_dn }}
       LDAP_ADMIN_USERNAME: ldapadmin
-      LDAP_ADMIN_PASSWORD: "{{ ldap_admin_password | password_hash('ldap_salted_sha1') }}"
+      LDAP_ADMIN_PASSWORD: "{{ ldap_admin_password | password_hash('ldap_salted_sha1', ldap_salt.admin) }}"
       LDAP_CONFIG_ADMIN_USERNAME: ldapconfigadmin
-      LDAP_CONFIG_ADMIN_PASSWORD: "{{ ldap_config_admin_password | password_hash('ldap_salted_sha1') }}"
+      LDAP_CONFIG_ADMIN_PASSWORD: "{{ ldap_config_admin_password | password_hash('ldap_salted_sha1', ldap_salt.config_admin) }}"
     ports:
       - 1389:1389
     volumes:
