@@ -64,6 +64,7 @@ services:
       - 1389:1389
     volumes:
       - {{ openldap_volume }}:/bitnami/openldap
+      - {{ schema_directory }}:/ldifs:ro
       - {{ guac_schema_file_path }}:/schema/custom.ldif:ro
     restart: always
   # ssp:
