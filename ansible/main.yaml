@@ -112,8 +112,8 @@
 
     - name: Check if Guacamole LDAP schema exists
       ansible.builtin.stat:
-        path: "{{ schema_file_path }}"
-      register: schema_file
+        path: "{{ guac_schema_file_path }}"
+      register: guac_schema_file
 
     - name: Create Guacamole LDAP schema ldif
       block:
@@ -130,12 +130,12 @@
 
         - name: Write schema
           ansible.builtin.copy:
-            dest: "{{ schema_file_path }}"
+            dest: "{{ guac_schema_file_path }}"
             content: "{{ schema.container.Output }}"
             owner: "{{ ansible_user }}"
             group: "{{ ansible_user }}"
             mode: 0644
-      when: not schema_file.stat.exists
+      when: not guac_schema_file.stat.exists
 
     - name: Create openldap data directory
       ansible.builtin.file:

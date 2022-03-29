@@ -64,7 +64,7 @@ services:
       - 1389:1389
     volumes:
       - {{ openldap_volume }}:/bitnami/openldap
-      - {{ schema_file }}:/schema/custom.ldif:ro
+      - {{ guac_schema_file_path }}:/schema/custom.ldif:ro
     restart: always
   # ssp:
   #   image: ltbproject/self-service-password:{{ self_service_password_version }}
