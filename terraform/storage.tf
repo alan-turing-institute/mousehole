@@ -40,7 +40,7 @@ resource "azurerm_storage_account" "this" {
 
   network_rules {
     default_action             = "Deny"
-    ip_rules = [data.external.own_ip.result.ip]
+    ip_rules                   = [data.external.own_ip.result.ip]
     virtual_network_subnet_ids = [azurerm_subnet.this.id]
   }
 }
