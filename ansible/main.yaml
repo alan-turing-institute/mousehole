@@ -105,7 +105,7 @@
     - name: Template base LDAP schema
       ansible.builtin.template:
         dest: "{{ schema_directory }}/base.ldif"
-        src: ansible/templates/ldap/base.ldif.j2
+        src: templates/ldap/base.ldif.j2
         owner: "{{ ansible_user }}"
         group: "{{ ansible_user }}"
         mode: 0644
