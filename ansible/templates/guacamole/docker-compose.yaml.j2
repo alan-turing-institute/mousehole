@@ -8,9 +8,9 @@ services:
     image: postgres:{{ postgres_version }}
     container_name: postgres
     environment:
-      - POSTGRES_DB={{ guac_db_name }}
-      - POSTGRES_USER={{ guac_db_user }}
-      - POSTGRES_PASSWORD={{ guac_db_password }}
+      POSTGRES_DB: {{ guac_db_name }}
+      POSTGRES_USER: {{ guac_db_user }}
+      POSTGRES_PASSWORD: {{ guac_db_password }}
     volumes:
       - {{ postgres_volume }}:/var/lib/postgresql/data
       - {{ init_db_file_path }}:/docker-entrypoint-initdb.d/init.sql
