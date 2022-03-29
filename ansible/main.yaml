@@ -62,6 +62,11 @@
     - name: Reset connection so that group changes take effect
       meta: reset_connection
 
+    - name: Install python3-ldap module
+      ansible.builtin.apt:
+        name: python3-ldap
+        state: present
+
     - name: Check if database initialisation script exists
       ansible.builtin.stat:
         path: "{{ init_db_file_path }}"
