@@ -22,7 +22,6 @@
     dn: "cn=RDP Connection,ou=groups,{{ ldap_base_dn }}"
     state: exact
     attributes:
-      cn: Desktop
       guacConfigProtocol: rdp
       guacConfigParameter:
         - hostname="{{ dsvm_private_ip }}"
@@ -42,19 +41,17 @@
       - guacConfigGroup
       - groupOfNames
     attributes:
-      cn: Command Line
       guacConfigProtocol: ssh
       member: ''
 
 - name: Configure SSH connection
-  community.general.ldap_entry:
+  community.general.ldap_attrs:
     server_uri: "{{ ldap_uri }}"
     bind_dn: "{{ ldap_admin_dn }}"
     bind_pw: "{{ ldap_admin_password }}"
     dn: "cn=SSH Connection,ou=groups,{{ ldap_base_dn }}"
     state: exact
     attributes:
-      cn: Command Line
       guacConfigProtocol: ssh
       guacConfigParameter:
         - hostname="{{ dsvm_private_ip }}"
