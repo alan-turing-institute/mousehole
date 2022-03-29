@@ -28,7 +28,7 @@ openldap_version: "2.5"
 openldap_volume: "{{ ansible_user_dir }}/openldap"
 schema_directory: "{{ ansible_user_dir }}/ldifs"
 guac_schema_file_path: "{{ schema_directory }}/guacConfigGroup.lidf"
-# self_service_password_version: "1.4.3"
+self_service_password_version: "1.4.3"
 traefik_dynamic_config: "{{ ansible_user_dir }}/dynamic_conf.yml"
 traefik_version: v2.7
 traefik_acme_volume: "{{ ansible_user_dir }}/acme"
