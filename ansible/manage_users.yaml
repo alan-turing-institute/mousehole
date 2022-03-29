@@ -65,7 +65,7 @@
 
     - name: Build list of use dns
       ansible.builtin.set_fact:
-        user_dns: "{{ user_dns }} + ['uid={{ item.username }},ou=users,dc=mousehole,dc=com']"
+        user_dns: "{{ user_dns | union(['uid=%s,ou=users,dc=mousehole,dc=com' | format(item.username)]) }}"
       loop: "{{ users }}"
 
     - name: Add users to connections
