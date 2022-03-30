@@ -67,21 +67,21 @@ services:
       - {{ schema_directory }}:/ldifs:ro
       - {{ guac_schema_file_path }}:/schema/custom.ldif:ro
     restart: always
-  # ssp:
-  #   image: ltbproject/self-service-password:{{ self_service_password_version }}
-  #   container_name: self_service_password
-  #   volumes:
-  #     - ./ssp.conf.php:/var/www/conf/config.inc.local.php:ro
-  #   restart: always
-  #   labels:
-  #     - "traefik.enable=true"
-  #     # Routers
-  #     - "traefik.http.routers.ssp.rule=Host(`{{ ssp_domain }}`)"
-  #     - "traefik.http.routers.ssp.tls=true"
-# {% if lets_encrypt %}
-  #     - "traefik.http.routers.ssp.tls.certResolver=le"
-# {% endif %}
-  #     - "traefik.http.routers.ssp.middleWares=hsts-headers@file"
+  ssp:
+    image: ltbproject/self-service-password:{{ self_service_password_version }}
+    container_name: self_service_password
+    volumes:
+      - {{ self_service_password_config_path }}:/var/www/conf/config.inc.local.php:ro
+    restart: always
+    labels:
+      - "traefik.enable=true"
+      # Routers
+      - "traefik.http.routers.ssp.rule=Host(`{{ ssp_domain }}`)"
+      - "traefik.http.routers.ssp.tls=true"
+{% if lets_encrypt %}
+      - "traefik.http.routers.ssp.tls.certResolver=le"
+{% endif %}
+      - "traefik.http.routers.ssp.middleWares=hsts-headers@file"
   reverse_proxy:
     image: traefik:{{ traefik_version }}
     container_name: traefik
