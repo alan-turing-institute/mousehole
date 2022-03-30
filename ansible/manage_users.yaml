@@ -7,9 +7,6 @@
     - vars/ansible_vars.yaml
     - vars/user_vars.yaml
 
-  vars:
-    user_dns: []
-
   tasks:
     - name: Check all required user variables are defined
       ansible.builtin.assert:
@@ -39,6 +36,9 @@
     - vars/ansible_vars.yaml
     - vars/user_vars.yaml
 
+  vars:
+    user_dns: []
+
   tasks:
     - name: Add users
       # Will not overwrite an existing user entry
@@ -61,9 +61,9 @@
           uidNumber: "{{ item.number }}"
           # Generate a random, unstored password, salted and SHA1 hashed
           userPassword: "{{ lookup('password', '/dev/null') | password_hash('ldap_salted_sha1') }}"
-      loop: users
+      loop: "{{ users }}"
 
-    - name: Build list of use dns
+    - name: Build list of user dns
       ansible.builtin.set_fact:
         user_dns: "{{ user_dns | union(['uid=%s,ou=users,dc=mousehole,dc=com' | format(item.username)]) }}"
       loop: "{{ users }}"
@@ -73,10 +73,13 @@
         server_uri: "{{ ldap_uri }}"
         bind_dn: "{{ ldap_admin_dn }}"
         bind_pw: "{{ ldap_admin_password }}"
-        dn: cn=Dummy Connection,ou=groups,dc=mousehole,dc=com
+        dn: "cn={{ item }},ou=groups,{{ ldap_base_dn }}"
         state: present
         attributes:
           member: "{{ user_dns }}"
+      loop:
+        - RDP Connection
+        - SSH Connection
 
     - name: Remove users
       community.general.ldap_entry:
@@ -85,3 +88,4 @@
         bind_pw: "{{ ldap_admin_password }}"
         dn: "uid={{ item.username }},ou=users,{{ ldap_base_dn }}"
         state: absent
+      loop: "{{ users_deleted }}"
