@@ -201,7 +201,7 @@
       ansible.builtin.import_tasks: tasks/guacamole/connections.yaml
 
       # - name: (Temporarily) disable TOTP to allowd Guacamole configuration through the API
-      #   ansible.builtin.import_tasks: tasks/disable_guacamole_totp.yaml
+      #   ansible.builtin.import_tasks: tasks/guacamole/disable_guacamole_totp.yaml
 
     - name: Check if password has been changed from default
       ansible.builtin.stat:
@@ -230,7 +230,7 @@
       when: not guacadmin_file.stat.exists
 
       # - name: Install and enable Guacamole TOTP extension
-      #   ansible.builtin.import_tasks: tasks/enable_guacamole_totp.yaml
+      #   ansible.builtin.import_tasks: tasks/guacamole/enable_guacamole_totp.yaml
 
 
 - name: Configure DSVM
