@@ -112,6 +112,9 @@
     - name: Configure ingress and egress shares
       ansible.builtin.import_tasks: tasks/dsvm/shares.yaml
 
+    - name: Configure LDAP authentication
+      ansible.builtin.import_tasks: tasks/dsvm/ldap.yaml
+
     - name: Install and configure RDP
       ansible.builtin.import_tasks: tasks/dsvm/rdp.yaml
 

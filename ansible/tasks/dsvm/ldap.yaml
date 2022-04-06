@@ -1,0 +1,22 @@
+---
+
+- name: Install LDAP authentication dependencies
+  ansible.builtin.apt:
+    name:
+      - libpam-ldap
+      - libnss-ldap
+      - nslcd
+    state: present
+
+- name: Configure nsswitch.conf
+  ansible.builtin.lineinfile:
+    path: /etc/sssd/sssd.conf
+    regex: "{{ item.regexp }}"
+    line: "{{ item.line }}"
+  loop:
+    - regexp: '^passwd:'
+      line: 'passwd: files systemd ldap'
+    - regexp: '^group:'
+      line: 'group: files systemd ldap'
+    - regexp: '^shadow:'
+      line: 'shadow: files ldap'
