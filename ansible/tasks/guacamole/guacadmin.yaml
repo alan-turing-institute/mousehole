@@ -1,0 +1,27 @@
+---
+
+- name: Check if password has been changed from default
+  ansible.builtin.stat:
+    path: "{{ home_dir }}/guacadmin"
+  register: guacadmin_file
+
+- name: Set Guacamole admin password
+  block:
+    - name: Change guacadmin password
+      scicore.guacamole.guacamole_user:
+        base_url: "{{ guacamole_root }}"
+        auth_username: guacadmin
+        auth_password: guacadmin
+        username: guacadmin
+        password: "{{ guac_admin_password }}"
+
+    - name: Create guacadmin file
+      ansible.builtin.file:
+        path: "{{ home_dir }}/guacadmin"
+        state: touch
+        owner: "{{ ansible_user }}"
+        group: "{{ ansible_user }}"
+        mode: 0644
+        modification_time: preserve
+        access_time: preserve
+  when: not guacadmin_file.stat.exists
