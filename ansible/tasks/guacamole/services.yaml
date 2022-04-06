@@ -1,0 +1,126 @@
+---
+
+- name: Check if database initialisation script exists
+  ansible.builtin.stat:
+    path: "{{ init_db_file_path }}"
+  register: init_file
+
+- name: Create database initialisation script
+  block:
+    - name: Get database initialisation script contents
+      become_user: "{{ ansible_user }}"
+      community.docker.docker_container:
+        name: guacamole
+        image: "guacamole/guacamole:{{ guac_version }}"
+        command: /opt/guacamole/bin/initdb.sh --postgres
+        cleanup: yes
+        detach: no
+        container_default_behavior: compatibility
+      register: init_script
+
+    - name: Write database initialisation script
+      ansible.builtin.copy:
+        dest: "{{ init_db_file_path }}"
+        content: "{{ init_script.container.Output }}"
+        owner: "{{ ansible_user }}"
+        group: "{{ ansible_user }}"
+        mode: 0644
+  when: not init_file.stat.exists
+
+- name: Create LDAP schema directory
+  ansible.builtin.file:
+    state: directory
+    path: "{{ schema_directory }}"
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+    mode: 0755
+
+- name: Template base LDAP schema
+  ansible.builtin.template:
+    dest: "{{ schema_directory }}/base.ldif"
+    src: templates/ldap/base.ldif.j2
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+    mode: 0644
+
+- name: Check if Guacamole LDAP schema exists
+  ansible.builtin.stat:
+    path: "{{ guac_schema_file_path }}"
+  register: guac_schema_file
+
+- name: Create Guacamole LDAP schema ldif
+  block:
+    - name: Get Guacamole LDAP schema
+      become_user: "{{ ansible_user }}"
+      community.docker.docker_container:
+        name: guacamole
+        image: "guacamole/guacamole:{{ guac_version }}"
+        command: cat ldap/guacConfigGroup.ldif
+        cleanup: yes
+        detach: no
+        container_default_behavior: compatibility
+      register: schema
+
+    - name: Write schema
+      ansible.builtin.copy:
+        dest: "{{ guac_schema_file_path }}"
+        content: "{{ schema.container.Output }}"
+        owner: "{{ ansible_user }}"
+        group: "{{ ansible_user }}"
+        mode: 0644
+  when: not guac_schema_file.stat.exists
+
+- name: Create openldap data directory
+  ansible.builtin.file:
+    path: "{{ openldap_volume }}"
+    state: directory
+    owner: root
+    group: root
+    mode: 0770
+
+- name: Template self service password configuration
+  ansible.builtin.template:
+    dest: "{{ self_service_password_config_path }}"
+    src: templates/guacamole/ssp_conf.php.j2
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+    mode: 0644
+
+- name: Template traefik dynamic configuration
+  ansible.builtin.template:
+    src: guacamole/traefik_dynamic_conf.yml.j2
+    dest: "{{ traefik_dynamic_config }}"
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+    mode: 0644
+
+- name: Template docker-compose file
+  ansible.builtin.template:
+    src: guacamole/docker-compose.yaml.j2
+    dest: "{{ home_dir }}/docker-compose.yaml"
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+    mode: 0644
+
+- name: Run docker services
+  become_user: "{{ ansible_user }}"
+  community.docker.docker_compose:
+    project_src: "{{ home_dir }}"
+    project_name: guacamole
+    pull: yes
+  register: compose_output
+
+- name: Ensure that containers are running
+  ansible.builtin.assert:
+    that:
+      - compose_output.services.database.postgres.state.running
+      - compose_output.services.guacd.guacd.state.running
+      - compose_output.services.guacamole.guacamole.state.running
+      - compose_output.services.ldap.ldap.state.running
+      - compose_output.services.reverse_proxy.traefik.state.running
+
+- name: Wait for docker services to be running
+  ansible.builtin.wait_for:
+    timeout: 20
+  when: compose_output.changed
+
