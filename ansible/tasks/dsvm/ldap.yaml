@@ -3,14 +3,13 @@
 - name: Install LDAP authentication dependencies
   ansible.builtin.apt:
     name:
-      - libpam-ldap
-      - libnss-ldap
-      - nslcd
+      - libpam-ldapd
+      - libnss-ldapd
     state: present
 
 - name: Configure nsswitch.conf
   ansible.builtin.lineinfile:
-    path: /etc/sssd/sssd.conf
+    path: /etc/nsswitch.conf
     regex: "{{ item.regexp }}"
     line: "{{ item.line }}"
   loop:
