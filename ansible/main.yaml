@@ -74,14 +74,14 @@
         state: present
 
     - name: Configure and start Docker services
-      anbile.builtin.import_tasks: tasks/guacamole/services.yaml
+      ansible.builtin.import_tasks: tasks/guacamole/services.yaml
 
     - name: Create connections
       ansible.builtin.import_tasks: tasks/guacamole/connections.yaml
 
       # - name: (Temporarily) disable TOTP to allowd Guacamole configuration through the API
       #   ansible.builtin.import_tasks: tasks/guacamole/disable_guacamole_totp.yaml
-      #
+
     - name: Configure guacadmin account
       ansible.builtin.import_tasks: tasks/guacamole/guacadmin.yaml
 
