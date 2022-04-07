@@ -19,3 +19,30 @@
       line: 'group: files systemd ldap'
     - regexp: '^shadow:'
       line: 'shadow: files ldap'
+
+- name: Configure nslcd.conf
+  ansible.builtin.lineinfile:
+    path: /etc/nslcd.conf
+    regex: "{{ item.regexp }}"
+    line: "{{ item.line }}"
+    insertafter: "{{ item.insertafter | default(omit) }}"
+    owner: root
+    group: root
+    mode: 0600
+  loop:
+    - regexp: '^uri'
+      line: "uri {{ ldap_uri }}"
+    - regexp: "^base"
+      line: "base dc=mousehole,dc=com"
+    - regexp: "^binddn"
+      insertafter: "^#binddn"
+      line: "binddn {{ ldap_admin_dn }}"
+    - regexp: "^bindpw"
+      insertafter: "^#bindpw"
+      line: "bindpw {{ ldap_admin_password }}"
+
+- name: Start and enable nslcd service
+  ansible.builtin.systemd:
+    name: nslcd
+    state: started
+    enabled: yes

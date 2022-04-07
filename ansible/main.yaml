@@ -47,6 +47,7 @@
   vars_files:
     - vars/ansible_vars.yaml
     - vars/terraform_vars.yaml
+    - vars/ldap_vars.yaml
 
   roles:
     - role: wait_for_cloud_init
@@ -100,6 +101,7 @@
   vars_files:
     - vars/ansible_vars.yaml
     - vars/terraform_vars.yaml
+    - vars/ldap_vars.yaml
 
   roles:
     - role: wait_for_cloud_init
