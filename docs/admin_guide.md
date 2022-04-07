@@ -14,13 +14,13 @@ Before you start, you will need to install some dependencies,
 You will also need,
 
 - A domain where you are able to modify or create new DNS records
+- An email account with SMTP access to let users reset their login
+  credentials
 
 And ideally
 
 - An email address to receive [Let's Encrypt](https://letsencrypt.org/)
   certificate expiry alerts
-- An email account with SMTP access to send users their initial login
-  credentials
 
 ### 🤖 Deploy the infrastructure with Terraform
 
@@ -115,6 +115,9 @@ Enter a password for the Postgres database as the value of the key
 
 Enter a password for the guacamole admin account as the value of the key
 `guac_admin_password`.
+
+Enter passwords for the two LDAP admin accounts as the values of the keys
+`ldap_admin_password` and `ldap_config_admin_password`.
 
 You can also define additional apt and snap packages here. See [Adding
 software](#-adding-software) for details.

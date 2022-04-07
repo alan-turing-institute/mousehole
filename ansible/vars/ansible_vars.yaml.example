@@ -16,11 +16,6 @@ ldap_admin_password:
 # LDAP config admin (ldapconfigadmin) password
 ldap_config_admin_password:
 
-# LDAP admin and config admin password salt
-ldap_salt:
-  admin:
-  config_admin:
-
 # Additional apt packages
 apt_packages_extra: []
 
