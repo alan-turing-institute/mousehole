@@ -21,6 +21,7 @@
       line: 'group: files systemd ldap'
     - regexp: '^shadow:'
       line: 'shadow: files ldap'
+  notify: Restart nscd
 
 - name: Configure LDAP name service daemon
   ansible.builtin.lineinfile:

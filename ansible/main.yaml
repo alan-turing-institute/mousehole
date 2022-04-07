@@ -140,6 +140,11 @@
         name: xrdp
         state: restarted
 
+    - name: Restart nscd
+      ansible.builtin.systemd:
+        name: nscd
+        state: restarted
+
     - name: Restart nslcd
       ansible.builtin.systemd:
         name: nslcd
