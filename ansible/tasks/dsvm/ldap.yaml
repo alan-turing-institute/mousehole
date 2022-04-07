@@ -7,7 +7,9 @@
       - libnss-ldapd
     state: present
 
-- name: Configure nsswitch.conf
+# Declare ldap as a source for the passwd, group and shadow databases in Name
+# Service Switch configuration. See man 5 nss and man 5 nsswitch.conf
+- name: Configure Name Service Switch for LDAP
   ansible.builtin.lineinfile:
     path: /etc/nsswitch.conf
     regex: "{{ item.regexp }}"
@@ -20,7 +22,7 @@
     - regexp: '^shadow:'
       line: 'shadow: files ldap'
 
-- name: Configure nslcd.conf
+- name: Configure LDAP name service daemon
   ansible.builtin.lineinfile:
     path: /etc/nslcd.conf
     regex: "{{ item.regexp }}"
@@ -33,7 +35,7 @@
     - regexp: '^uri'
       line: "uri {{ ldap_uri }}"
     - regexp: "^base"
-      line: "base dc=mousehole,dc=com"
+      line: "base {{ ldap_base_dn }}"
     - regexp: "^binddn"
       insertafter: "^#binddn"
       line: "binddn {{ ldap_admin_dn }}"
