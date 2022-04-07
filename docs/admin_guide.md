@@ -120,7 +120,7 @@ Enter passwords for the two LDAP admin accounts as the values of the keys
 `ldap_admin_password` and `ldap_config_admin_password`.
 
 You can also define additional apt and snap packages here. See [Adding
-software](#-adding-software) for details.
+software](#adding-software) for details.
 
 Configure the Guacamole and DSVM machines
 
@@ -180,7 +180,7 @@ az vm list-sizes --location "<location>"
 ```
 
 You can apply the new VM sizes using the plan/apply workflow
-[above](#-deploy-the-infrastructure-with-terraform). Plan your changes using
+[above](#deploy-the-infrastructure-with-terraform). Plan your changes using
 
 ```bash
 terraform plan -out resizeplan
