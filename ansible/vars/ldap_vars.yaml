@@ -1,6 +1,19 @@
 ---
 
 ldap_base_dn: dc=mousehole,dc=com
+
+# Admin account
 ldap_admin_dn: "cn=ldapadmin,{{ ldap_base_dn }}"
+
+# Users organisational unit
 ldap_user_base_dn: "ou=users,{{ ldap_base_dn }}"
-ldap_config_base_dn: "ou=groups,{{ ldap_base_dn }}"
+
+# Groups organisational unit
+ldap_groups_base_dn: "ou=groups,{{ ldap_base_dn }}"
+
+# Guacamole connections
+ldap_config_base_dn: "{{ ldap_groups_base_dn }}"
+
+# Group for normal users
+mouseholeusers_dn: "cn=mouseholeusers,{{ ldap_groups_base_dn }}"
+mouseholeusers_gid: 10000

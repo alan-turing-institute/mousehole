@@ -1,11 +1,5 @@
 ---
 
-- name: Create group for shared data
-  ansible.builtin.group:
-    name: shared
-    system: yes
-    state: present
-
 - name: Partition disk
   community.general.parted:
     device: /dev/disk/azure/scsi1/lun0
@@ -33,7 +27,7 @@
     path: /shared
     state: directory
     owner: root
-    group: shared
+    group: "{{ mouseholeusers_gid }}"
     mode: u=rwx,g=rwx,o=,g+s
 
 - name: Install ACL tools

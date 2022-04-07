@@ -14,7 +14,7 @@ email:
 #   - username: example
 #     full_name: Example User
 #     surname: User
-#     number: 100x
+#     number: 11000
 #     email: user@example.com
 users: []
 

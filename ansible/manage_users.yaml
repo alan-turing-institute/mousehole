@@ -14,7 +14,6 @@
           - item.username is defined
           - item.full_name is defined
           - item.surname is defined
-          - item.number is defined
           - item.email is defined
         success_msg: "User {{ item.username }} has all required variables defined"
         fail_msg: "User {{ item }} does not have all required variables defined!"
@@ -35,6 +34,7 @@
   vars_files:
     - vars/ansible_vars.yaml
     - vars/user_vars.yaml
+    - vars/ldap_vars.yaml
 
   vars:
     user_dns: []
@@ -53,12 +53,12 @@
           - shadowAccount
         attributes:
           cn: "{{ item.full_name }}"
-          gidNumber: "{{ item.number }}"
           homeDirectory: "/home/{{ item.username }}"
           mail: "{{ item.email }}"
           sn: "{{ item.surname }}"
           uid: "{{ item.username }}"
           uidNumber: "{{ item.number }}"
+          gidNumber: "{{ mouseholeusers_gid }}"
           loginShell: /bin/bash
           # Generate a random, unstored password, salted and SHA1 hashed
           userPassword: "{{ lookup('password', '/dev/null') | password_hash('ldap_salted_sha1') }}"

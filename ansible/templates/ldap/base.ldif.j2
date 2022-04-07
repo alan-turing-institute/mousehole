@@ -10,6 +10,11 @@ dn: {{ ldap_user_base_dn }}
 objectClass: organizationalUnit
 ou: users
 
-dn: {{ ldap_config_base_dn }}
+dn: {{ ldap_groups_base_dn }}
 objectClass: organizationalUnit
 ou: groups
+
+dn: {{ mouseholeusers_dn }}
+cn: mouseholeusers
+gidNumber: {{ mouseholeusers_gid }}
+objectClass: posixGroup
