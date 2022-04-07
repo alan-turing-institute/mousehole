@@ -24,7 +24,7 @@
     attributes:
       guacConfigProtocol: rdp
       guacConfigParameter:
-        - hostname="{{ dsvm_private_ip }}"
+        - hostname={{ dsvm_private_ip }}
         - port=3389
         - security=Any
         - ignore-cert=true
@@ -54,4 +54,4 @@
     attributes:
       guacConfigProtocol: ssh
       guacConfigParameter:
-        - hostname="{{ dsvm_private_ip }}"
+        - hostname={{ dsvm_private_ip }}
