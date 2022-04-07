@@ -1,5 +1,7 @@
 ---
 
+ldap_port: 1389
+
 ldap_base_dn: dc=mousehole,dc=com
 
 # Admin account

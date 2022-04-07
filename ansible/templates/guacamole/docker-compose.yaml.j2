@@ -32,7 +32,7 @@ services:
       POSTGRES_USER: {{ guac_db_user }}
       POSTGRES_PASSWORD: {{ guac_db_password }}
       LDAP_HOSTNAME: ldap
-      LDAP_PORT: 1389
+      LDAP_PORT: {{ ldap_port }}
       LDAP_SEARCH_BIND_DN: {{ ldap_admin_dn }}
       LDAP_SEARCH_BIND_PASSWORD: {{ ldap_admin_password }}
       LDAP_USER_BASE_DN: {{ ldap_user_base_dn }}
@@ -61,7 +61,7 @@ services:
       LDAP_CONFIG_ADMIN_USERNAME: ldapconfigadmin
       LDAP_CONFIG_ADMIN_PASSWORD: "{{ ldap_config_admin_password }}"
     ports:
-      - 1389:1389
+      - {{ ldap_port }}:{{ ldap_port }}
     volumes:
       - {{ openldap_volume }}:/bitnami/openldap
       - {{ schema_directory }}:/ldifs:ro

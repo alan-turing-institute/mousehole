@@ -34,7 +34,7 @@
 $debug = false;
 
 # LDAP
-$ldap_url = "ldap://ldap:1389";
+$ldap_url = "ldap://ldap:{{ ldap_port }}";
 $ldap_starttls = false;
 $ldap_binddn = "cn=ldapadmin,{{ ldap_base_dn }}";
 $ldap_bindpw = "{{ ldap_admin_password }}";

@@ -38,4 +38,4 @@ traefik_acme_volume: "{{ home_dir }}/acme"
 guacamole_root: http://localhost:8080/guacamole
 
 # LDAP parameters
-ldap_uri: ldap://localhost:1389
+ldap_uri: ldap://localhost:{{ ldap_port }}
