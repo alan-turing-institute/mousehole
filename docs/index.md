@@ -52,7 +52,10 @@ more permissive environment suitable for non-sensitive data.
   and [Ansible](https://www.ansible.com/))
 - 🥑 [Guacamole](https://guacamole.apache.org/) for remote desktop in a browser
 - 🔐 Two factor authentication
+- 👤 Centralised user management with [OpenLDAP](https://www.openldap.org/)
 - 🤖 Automated account creation and deletion
+- 📧 [Self-service password
+  reset](https://self-service-password.readthedocs.io/en/stable/) over email
 - 🖥️ Configurable Ubuntu VM pre-loaded with programming/data-science packages
 - ⛰️ Read-only filesystem for input data
 - 🚪 Read/write filesystem to easily extract outputs
