@@ -34,8 +34,9 @@ traefik_dynamic_config: "{{ home_dir }}/dynamic_conf.yml"
 traefik_version: v2.7
 traefik_acme_volume: "{{ home_dir }}/acme"
 
-# Guacamole route
-guacamole_root: http://localhost:8080/guacamole
+# Guacamole parameters
+guacamole_port: 8080
+guacamole_root: http://localhost:{{ guacamole_port }}/guacamole
 
 # LDAP parameters
 ldap_uri: ldap://localhost:{{ ldap_port }}

@@ -23,7 +23,7 @@ services:
     image: guacamole/guacamole:{{ guac_version }}
     container_name: guacamole
     ports:
-      - 127.0.0.1:8080:8080
+      - 127.0.0.1:{{ guacamole_port }}:{{ guacamole_port }}
     environment:
       GUACAMOLE_HOME: {{ guacamole_home_container }}
       GUACD_HOSTNAME: guacd
