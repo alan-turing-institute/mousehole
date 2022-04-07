@@ -40,6 +40,7 @@
     - regexp: "^bindpw"
       insertafter: "^#bindpw"
       line: "bindpw {{ ldap_admin_password }}"
+  notify: Restart nslcd service
 
 - name: Start and enable nslcd service
   ansible.builtin.systemd:
