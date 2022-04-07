@@ -136,16 +136,16 @@ Make a copy of the users variables file
 cp vars/user_vars.yaml.example vars/user_vars.yaml
 ```
 
-Open your copy with your editor.  If you want the user management role to
-automatically email users their initial login credentials, complete enter your
-email's SMTP settings into the `email` dict.
+Open your copy with your editor.
 
-If you also want to write the initial passwords to a file on your local machine,
-change `force_write_initial_passwords` to `yes`.
+To declare users to add (existing users will not be modified), add their
+username, full name, surname, email address and a unique user number to the
+`users` dict following the example.
 
-To declare users that should exist (this can be both existing and new users),
-add their name, username and email address to the `users` dict following the
-example.
+!!! note "💡 Hint"
+    The user number most be unique and greater than 1000. To avoid potential
+    conflicts it is a good idea to number your users sequentially starting from
+    11000.
 
 To declare users that should not exist, add their username to the
 `users_deleted` dict.
@@ -156,10 +156,9 @@ To create or remove users run
 ansible-playbook -i inventory.yaml manage_users.yaml
 ```
 
-If you have configured SMTP settings, newly created users will be send their
-initial credentials from that email address. If the Guacamole and Linux
-credentials are written to file they can be found in `guac_new_users.yaml` and
-`new_users.yaml` respectively.
+New users will be created with a strong, random, salted and hashed password. The
+plain text value of the password will not be made known to use. Users will set
+their own password using the self service password service.
 
 ## ↕️ Resizing
 
