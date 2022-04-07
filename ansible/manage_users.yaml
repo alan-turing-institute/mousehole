@@ -59,6 +59,7 @@
           sn: "{{ item.surname }}"
           uid: "{{ item.username }}"
           uidNumber: "{{ item.number }}"
+          loginShell: /bin/bash
           # Generate a random, unstored password, salted and SHA1 hashed
           userPassword: "{{ lookup('password', '/dev/null') | password_hash('ldap_salted_sha1') }}"
       loop: "{{ users }}"
