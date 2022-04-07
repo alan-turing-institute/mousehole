@@ -119,8 +119,7 @@
       - compose_output.services.ldap.ldap.state.running
       - compose_output.services.reverse_proxy.traefik.state.running
 
-- name: Wait for docker services to be running
+- name: Wait for docker services to finish setup  # noqa no-handler
   ansible.builtin.wait_for:
     timeout: 20
   when: compose_output.changed
-
