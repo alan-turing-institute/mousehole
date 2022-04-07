@@ -43,10 +43,15 @@
     - regexp: "^bindpw"
       insertafter: "^#bindpw"
       line: "bindpw {{ ldap_admin_password }}"
-  notify: Restart nslcd service
+  notify: Restart nslcd
 
 - name: Start and enable nslcd service
   ansible.builtin.systemd:
     name: nslcd
     state: started
     enabled: yes
+
+- name: Enable home directory creation for LDAP users
+  ansible.builtin.lineinfile:
+    path: /etc/pam.d/common-session
+    line: session required pam_mkhomedir.so skel=/etc/skel umask=077
